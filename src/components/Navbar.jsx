@@ -15,8 +15,8 @@ const menuItems = [
     href: '/contact'
   },
   {
-    text: 'Pricing',
-    href: '/pricing'
+    text: 'Producto',
+    href: '/productos'
   }
 ]
 export const Navbar = () => {
