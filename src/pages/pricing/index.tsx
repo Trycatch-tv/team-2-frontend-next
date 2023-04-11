@@ -1,21 +1,19 @@
-import { MainLayout } from '@/layout/MainLayout'
-import { Inter } from '@next/font/google'
 import Image from 'next/image'
-
+import { Inter } from '@next/font/google'
+import { MainLayout } from '@/layout/MainLayout'
 const inter = Inter({ subsets: ['latin'] })
-
-export default function HomePage() {
+const PricingPage = () => {
   return (
     <MainLayout>
       <div className="description">
         <p>
           Get started by editing&nbsp;
-          <code className="code">src/pages/index.js</code>
+          <code className="code">src/pages/pricing/index.js</code>
         </p>
       </div>
 
       <div className="center">
-        <h1>Home Page</h1>
+        <h1>Pricing Page</h1>
         <Image
           className="logo"
           src="/next.svg"
@@ -28,3 +26,4 @@ export default function HomePage() {
     </MainLayout>
   )
 }
+export default PricingPage
