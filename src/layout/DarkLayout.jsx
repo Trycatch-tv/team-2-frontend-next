@@ -1,6 +1,4 @@
-import { Props } from '@/interfaces/fcProps.interface'
-import { FC, PropsWithChildren } from 'react'
-export const DarkLayout: FC<PropsWithChildren<Props>> = ({ children }) => {
+export const DarkLayout = ({ children }) => {
   return (
     <div
       style={{
