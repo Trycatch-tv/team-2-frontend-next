@@ -1,14 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
 
-interface Data {
-  name: string
-}
-
-export default function handler(
-  _req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
+export default function handler(_req, res) {
   res.status(200).json({ name: 'John Doe' })
 }
