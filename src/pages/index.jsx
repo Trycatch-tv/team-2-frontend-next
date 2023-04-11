@@ -15,7 +15,7 @@ export default function HomePage() {
       </div>
 
       <div className="center">
-        <h1>Home Page</h1>
+        <h1 className="text-red-400 text-2xl">Home Page</h1>
         <Image
           className="logo"
           src="/next.svg"
