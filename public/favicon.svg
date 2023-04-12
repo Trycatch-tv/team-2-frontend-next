@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="30"
+   height="30"
+   viewBox="0 0 7.9374998 7.9375002"
+   version="1.1"
+   id="svg8">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1">
+    <g
+       aria-label="e"
+       id="text835"
+       style="font-size:12.5429px;line-height:0.85;font-family:'Caveat Brush';-inkscape-font-specification:'Caveat Brush';letter-spacing:0px;word-spacing:0px;stroke-width:0.167985">
+      <path
+         d="M 7.6495522,3.9442523 V 4.5689475 H 2.5233767 c 0.053079,0.5144549 0.2388541,0.900296 0.5573262,1.1575235 0.3184721,0.2572275 0.7635164,0.3858412 1.3351329,0.3858412 0.4613762,0 0.9329598,-0.067369 1.4147509,-0.2021073 C 6.3164608,5.7713838 7.1143103,5.6141459 7.6246823,5.3365036 L 7.5635174,6.936681 C 7.0449795,7.1326639 6.28788,7.3188314 5.7693421,7.4168228 5.2508042,7.5188971 4.7322664,7.5699343 4.2137285,7.5699343 2.972504,7.5699343 2.0068804,7.2555452 1.3168575,6.6267671 0.63091768,5.9939059 0.28794777,5.1079002 0.28794777,3.9687501 c 0,-1.1187352 0.33684548,-1.9986164 1.01053643,-2.6396435 0.6777739,-0.64102711 1.6086922,-0.96154066 2.7927551,-0.96154066 1.0779055,0 1.9394132,0.32459652 2.5845233,0.97378956 0.6491931,0.6491931 0.9737896,1.5168254 0.9737896,2.6028968 z M 5.3957499,3.2154412 c 0,-0.4164635 -0.1224893,-0.7512674 -0.3674678,-1.0044119 C 4.7873866,1.9538018 4.470956,1.8251881 4.0789903,1.8251881 c -0.4246294,0 -0.7696408,0.1204478 -1.0350342,0.3613433 C 2.7785627,2.423344 2.6132022,2.7663139 2.5478746,3.2154412 Z"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-family:'Noto Sans Cherokee';-inkscape-font-specification:'Noto Sans Cherokee Heavy';stroke-width:0.167985;fill:#ffffff"
+         id="path837" />
+    </g>
+  </g>
+</svg>
