@@ -5,13 +5,13 @@ import { useState } from 'react'
 export const MenuNavHome = ({ item1, item2, item3 }) => (
   <>
     <p>
-      <a href="#home">{item1}</a>
+      <a href="/productos">{item1}</a>
     </p>
     <p>
-      <a href="#tools">{item2}</a>
+      <a href="/register">{item2}</a>
     </p>
     <p>
-      <a href="#Nosotros">{item3}</a>
+      <a href="/categories">{item3}</a>
     </p>
   </>
 )
@@ -28,9 +28,9 @@ export const Navbar = () => {
         <div className={styles.navar_links}>
           <div className={styles.navbar_links_container}>
             <MenuNavHome
-              item1={'Home'}
-              item2={'Herramientas'}
-              item3={'Nosotros'}
+              item1={'Productos'}
+              item2={'Registrar Productos'}
+              item3={'Gestionar Categoria'}
             />
           </div>
         </div>
@@ -60,9 +60,9 @@ export const Navbar = () => {
             <div className={styles.navbar_menu_container}>
               <div className={styles.navbar_menu_container_links}>
                 <MenuNavHome
-                  item1={'Home'}
-                  item2={'Herramientas'}
-                  item3={'Nosotros'}
+                  item1={'Productos'}
+                  item2={'Registrar Productos'}
+                  item3={'Gestionar Categoria'}
                 />
                 <div className={styles.navbar_menu_container_links_sign}>
                   <a href="/login">
