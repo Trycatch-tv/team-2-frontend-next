@@ -342,12 +342,12 @@
 
 "@next/swc-linux-x64-gnu@13.1.6":
   version "13.1.6"
-  resolved "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-13.1.6.tgz"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-13.1.6.tgz#9513d36d540bbfea575576746736054c31aacdea"
   integrity sha512-GT5w2mruk90V/I5g6ScuueE7fqj/d8Bui2qxdw6lFxmuTgMeol5rnzAv4uAoVQgClOUO/MULilzlODg9Ib3Y4Q==
 
 "@next/swc-linux-x64-musl@13.1.6":
   version "13.1.6"
-  resolved "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-13.1.6.tgz"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-13.1.6.tgz#d61fc6884899f5957251f4ce3f522e34a2c479b7"
   integrity sha512-keFD6KvwOPzmat4TCnlnuxJCQepPN+8j3Nw876FtULxo8005Y9Ghcl7ACcR8GoiKoddAq8gxNBrpjoxjQRHeAQ==
 
 "@next/swc-win32-arm64-msvc@13.1.6":
@@ -362,7 +362,7 @@
 
 "@next/swc-win32-x64-msvc@13.1.6":
   version "13.1.6"
-  resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.1.6.tgz#17ed919c723426b7d0ce1cd73d40ce3dcd342089"
+  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.1.6.tgz"
   integrity sha512-Ls2OL9hi3YlJKGNdKv8k3X/lLgc3VmLG3a/DeTkAd+lAituJp8ZHmRmm9f9SL84fT3CotlzcgbdaCDfFwFA6bA==
 
 "@nodelib/fs.scandir@2.1.5":
@@ -2018,7 +2018,7 @@ human-signals@^3.0.1:
   resolved "https://registry.npmjs.org/human-signals/-/human-signals-3.0.1.tgz"
   integrity sha512-rQLskxnM/5OCldHo+wNXbpVgDn5A17CUoKX+7Sokwaknlq7CdSnphy0W39GU8dw59XiCXmFXDg4fRuckQRKewQ==
 
-husky@8.0.3:
+husky@^8.0.3:
   version "8.0.3"
   resolved "https://registry.npmjs.org/husky/-/husky-8.0.3.tgz"
   integrity sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==
@@ -3067,6 +3067,11 @@ react-dom@18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-icons@^4.8.0:
+  version "4.8.0"
+  resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.8.0.tgz"
+  integrity sha512-N6+kOLcihDiAnj5Czu637waJqSnwlMNROzVZMhfX68V/9bu9qHaMIJC4UdozWoOk57gahFCNHwVvWzm0MTzRjg==
 
 react-is@^16.13.1:
   version "16.13.1"
