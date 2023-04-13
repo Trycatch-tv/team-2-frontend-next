@@ -1,6 +1,7 @@
-import { Navbar } from '@/components/Navbar'
 import Head from 'next/head'
 import styles from './mainLayout.module.css'
+import { Navbar } from '@/components/navbar/Navbar'
+import Footer from '@/components/footer/Footer'
 
 export const MainLayout = ({ children }) => {
   return (
@@ -13,6 +14,7 @@ export const MainLayout = ({ children }) => {
       </Head>
       <Navbar />
       <main className={styles.main}>{children}</main>
+      <Footer />
     </>
   )
 }
