@@ -46,7 +46,10 @@ export default function Productos() {
   }
 
   return (
-    <MainLayout>
+    <MainLayout
+      title="Productoss"
+      description="pagina para gestionar productos"
+    >
       <Transition show={isConfirmationOpen} as={Fragment}>
         <Dialog
           onClose={() => setIsConfirmationOpen(false)}
@@ -295,7 +298,7 @@ export default function Productos() {
                   <button
                     onClick={crearProducto}
                     type="button"
-                    className="text-white inline-flex float-right bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
+                    className="text-white inline-flex float-right bg-emerald-800 hover:bg-emerald-900 focus:ring-4 focus:outline-none focus:ring-emerald-800/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-emerald-800/55 mr-2 mb-2"
                   >
                     <PlusIcon className="h-6 w-6 text-white" />
                     <span>Agregar</span>
