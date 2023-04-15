@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect, useId } from 'react'
+import { useState, Fragment, useEffect, useId, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
   PlusIcon,
@@ -42,6 +42,10 @@ export default function Productos() {
   const [codProd, setCodProd] = useState(0)
   const [msnAlert, setMsnAlert] = useState('')
   const [detProd, setDetProd] = useState({})
+  const [tipoFiltro, setTipoFiltro] = useState('')
+  const [filtro, setFiltro] = useState('')
+  const [productFiltrado, setProductFiltrado] = useState({})
+  const productRef = useRef(null)
 
   const [isOpen, setIsOpen] = useState(false)
   const [isAlertConfirm, setAlertConfirm] = useState(false)
@@ -114,7 +118,7 @@ export default function Productos() {
     if (detProd) {
       getCod(detProd.cod_)
       getNom(detProd.nom_)
-      getPre(detProd.nom_)
+      getPre(detProd.pre_)
       getCan(detProd.can_)
       getCatId(detProd.catId)
       getMarId(detProd.marId)
@@ -141,6 +145,7 @@ export default function Productos() {
     setModal(true)
     setIsBtnSave('Guardar')
     setColorIsBtnSave('bg-blue-500')
+    setIdProd('')
     getCod('')
     getNom('')
     getPre('')
@@ -165,9 +170,23 @@ export default function Productos() {
     setCodProd(cod)
   }
 
-  const editarProducto = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     setModal(false)
     setIsOpen(true)
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const formJson = Object.fromEntries(formData.entries());
+    console.log(formJson);
+  }
+
+  const filtrarPor = (e) => {
+    e.preventDefault()
+    if (filtro && tipoFiltro != null && tipoFiltro.length) {
+
+    }
   }
 
   return (
@@ -207,8 +226,8 @@ export default function Productos() {
                       <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                         Felicitaciones
                       </h3>
-                      <div class="mt-2">
-                        <p class="text-sm text-gray-500">{msnAlert}</p>
+                      <div className="mt-2">
+                        <p className="text-sm text-gray-500">{msnAlert}</p>
                       </div>
                     </div>
                   </div>
@@ -312,28 +331,28 @@ export default function Productos() {
                     </div>
                     <div className="mt-2 mb-4 pt-6">
 
-                      <form>
+                      <form method="post" onSubmit={handleSubmit}>
                         <div className="grid md:grid-cols-2 md:gap-6">
                           <div className='&_select]:bg-gray-50 [&_select]:border [&_select]:border-gray-300 [&_select]:text-gray-900 [&_select]:text-sm [&_select]:rounded-lg [&_select]:focus:ring-blue-500 [&_select]:focus:border-blue-500 [&_select]:block [&_select]:w-full [&_select]:p-2.5'>
                             <div className="grid md:grid-cols-2 md:gap-6">
                               <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name={`${idForm}-codigo`} onChange={e => getCod(e.target.value)} value={cod_} id={`${idForm}-codigo`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="cod_" onChange={e => getCod(e.target.value)} value={cod_} id={`${idForm}-codigo`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor={`${idForm}-codigo`} className="peer-focus:font-medium absolute text-sm text-gray-500 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Código</label>
-                                <input type="hidden" name={`${idForm}-id`} id={`${idForm}-id`} value={idProd} />
+                                <input type="hidden" name="id_" id={`${idForm}-id`} value={idProd} />
                               </div>
                               <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name={`${idForm}-nombre`} onChange={e => getNom(e.target.value)} value={nom_} id={`${idForm}-nombre`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="prod_" onChange={e => getNom(e.target.value)} value={nom_} id={`${idForm}-nombre`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor={`${idForm}-nombre`} className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Producto</label>
                               </div>
                             </div>
 
                             <div className="grid md:grid-cols-2 md:gap-6">
                               <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name={`${idForm}-precio`} onChange={e => getPre(e.target.value)} value={pre_} id={`${idForm}-precio`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="pre_" onChange={e => getPre(e.target.value)} value={pre_} id={`${idForm}-precio`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor={`${idForm}-precio`} className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Precio</label>
                               </div>
                               <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name={`${idForm}-cantidad`} onChange={e => getCan(e.target.value)} value={can_} id={`${idForm}-cantidad`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="text" name="can_" onChange={e => getCan(e.target.value)} value={can_} id={`${idForm}-cantidad`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor={`${idForm}-cantidad`} className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cantidad</label>
                               </div>
                             </div>
@@ -341,7 +360,7 @@ export default function Productos() {
                             <div className="grid md:grid-cols-3 md:gap-6">
                               <div className="relative z-0 w-full mb-6 group">
                                 <label htmlFor={`${idForm}-categoria`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Categoria</label>
-                                <select id={`${idForm}-categoria`} name={`${idForm}-categoria`} value={catId} onChange={e => getCatId(e.target.value)}>
+                                <select id={`${idForm}-categoria`} name="cat_" value={catId} onChange={e => getCatId(e.target.value)}>
                                   <option value="">Selecionar</option>
                                   <option value="1">Bebidas</option>
                                   <option value="2">Embutidos</option>
@@ -351,7 +370,7 @@ export default function Productos() {
                               </div>
                               <div className="relative z-0 w-full mb-6 group">
                                 <label htmlFor={`${idForm}-marca`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Marca</label>
-                                <select id={`${idForm}-marca`} name={`${idForm}-marca`} value={marId} onChange={e => getMarId(e.target.value)}>
+                                <select id={`${idForm}-marca`} name="mar_" value={marId} onChange={e => getMarId(e.target.value)}>
                                   <option value="">Selecionar</option>
                                   <option value="1">Inka kola</option>
                                   <option value="2">Kola inglesa</option>
@@ -365,7 +384,7 @@ export default function Productos() {
                               </div>
                               <div className="relative z-0 w-full mb-6 group">
                                 <label htmlFor={`${idForm}-unidadmedida`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Unidad Medida</label>
-                                <select id={`${idForm}-unidadmedida`} name={`${idForm}-unidadmedida`} value={uniId} onChange={e => getUniId(e.target.value)}>
+                                <select id={`${idForm}-unidadmedida`} name="uni_" value={uniId} onChange={e => getUniId(e.target.value)}>
                                   <option value="">Selecionar</option>
                                   <option value="1">Caja 6 unidades</option>
                                   <option value="2">1 Lt</option>
@@ -381,7 +400,7 @@ export default function Productos() {
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
                               <label htmlFor={`${idForm}-descripcion`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Descripción</label>
-                              <textarea onChange={e => getDet(e.target.value)} value={det_} id={`${idForm}-descripcion`} rows={2} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-0 border-b-2 border-gray-300 focus:ring-blue-500 focus:border-0 focus:border-b-2 focus:border-blue-600" placeholder="Descripción"></textarea>
+                              <textarea onChange={e => getDet(e.target.value)} name="des_" value={det_} id={`${idForm}-descripcion`} rows={2} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-0 border-b-2 border-gray-300 focus:ring-blue-500 focus:border-0 focus:border-b-2 focus:border-blue-600" placeholder="Descripción"></textarea>
                             </div>
                           </div>
                           <div>
@@ -398,9 +417,10 @@ export default function Productos() {
                                 }
                                 className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                 aria-describedby={`${idForm}-imagen_help`}
-                                id={`${idForm}-imagen`}
+                                id={`${idForm}-imagen`} name="file"
                                 type="file"
                               />
+                              <input type="hidden" value={imageUrl} id={`${idForm}-img`} name='img_' />
                               {imageUrl && (
                                 <img
                                   src={imageUrl}
@@ -412,15 +432,14 @@ export default function Productos() {
                           </div>
                         </div>
                         <button
-                          onClick={editarProducto}
-                          type="button"
+                          type="submit"
                           className={`text-white ${isColorBtnSave} hover:${isColorBtnSave}/55 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4] mr-2 mb-2`}
                         >
                           <ArchiveBoxIcon className="h-6 w-6 text-white" />
                           <span>{isBtnSave}</span>
                         </button>
                         <button
-                          onClick={() => editarProducto()}
+                          onClick={() => setModal(false)}
                           className="text-white bg-red-500 hover:bg-danger-100 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
                         >
                           <XMarkIcon className="h-6 w-6 text-white" />
@@ -459,43 +478,49 @@ export default function Productos() {
                 <div className="basis-1/2">
                   <div className="mb-3 xl:w-full">
                     <div className="relative mb-4 flex-wrap items-stretch">
-                      <div className="flex relative">
-                        <select
-                          name=""
-                          id=""
-                          className="m-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        >
-                          <option value="">Selecionar</option>
-                          <option value="abarrotes">Categoria</option>
-                          <option value="bebidas">Codigo</option>
-                          <option value="embutios">Producto</option>
-                          <option value="lacteos">Marca</option>
-                          <option value="umedida">Unida Medida</option>
-                        </select>
-                        <input
-                          type="search"
-                          className="-mr-0.5 w-full block  min-w-0 flex-auto border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-                          placeholder="Buscar"
-                          aria-label="Search"
-                          aria-describedby="button-addon1"
-                        />
-                        <button
-                          className="z-[2] flex items-center rounded-r px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
-                          type="button"
-                          id="button-addon1"
-                          data-te-ripple-init
-                          data-te-ripple-color="light"
-                        >
-                          <MagnifyingGlassIcon className="h-6 w-6 text-black" />
-                        </button>
-                      </div>
+                      <form id={`${idForm}-search-form`} onSubmit={filtrarPor}>
+                        <div className="flex relative">
+                          <select
+                            name="tipo_filtro"
+                            id={`${idForm}-tipofiltro`}
+                            value={tipoFiltro}
+                            onChange={e => { setTipoFiltro(e.target.value) }}
+                            className="m-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          >
+                            <option value="">Selecionar</option>
+                            <option value="abarrotes">Categoria</option>
+                            <option value="bebidas">Codigo</option>
+                            <option value="embutios">Producto</option>
+                            <option value="lacteos">Marca</option>
+                            <option value="umedida">Unida Medida</option>
+                          </select>
+                          <input
+                            type="search"
+                            id={`${idForm}-filtro-search`}
+                            name="filtro-search"
+                            className="-mr-0.5 w-full block  min-w-0 flex-auto border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-gray-500 focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-gray-300"
+                            placeholder="Buscar"
+                            aria-label="Search"
+                            aria-describedby="button-addon1"
+                            value={filtro}
+                            onChange={e => setFiltro(e.target.value)}
+                          />
+                          <button
+                            className="z-[2] flex items-center rounded-r px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-gray-700 hover:shadow-lg focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg"
+                            type="submit"
+                            id="button-addon1"
+                            data-te-ripple-init
+                            data-te-ripple-color="light"
+                          >
+                            <MagnifyingGlassIcon className="h-6 w-6 text-black" />
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            {idProd} <br />
-            {codProd}
             <ProductList showProduct={verDetalleProducto} deleteProduct={handleDelete} products={products} />
           </div>
         </div>
