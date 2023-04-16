@@ -11,6 +11,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { MainLayout } from '@/layout/MainLayout'
 import { ProductList } from '@/components/product/ProductList'
+import { fromJSON } from 'postcss'
 
 function useFormulario() {
   const [cod_, getCod] = useState(0)
@@ -32,7 +33,6 @@ function useFormulario() {
     uniId, getUniId,
     det_, getDet
   }
-
 }
 
 export default function Productos() {
@@ -71,7 +71,7 @@ export default function Productos() {
     fetch("https://mocki.io/v1/577cc7a3-07d6-4e14-b1b0-f62ef81f4699")
       .then(async res => await res.json()).
       then(res => {
-        setProducts(res.Search?.map(products => ({
+        let rta = res.Search?.map(products => ({
           id_: products.id,
           cod_: products.codigo,
           nom_: products.nombre,
@@ -85,7 +85,9 @@ export default function Productos() {
           unmId: products.unidadmediadId,
           uni_: products.unidadmedida,
           img_: products.imagen
-        })))
+        }))
+        productRef.current = rta
+        setProducts(rta)
       }).catch(err => {
         console.error(err)
       })
@@ -127,6 +129,13 @@ export default function Productos() {
       getDet(detProd.des_)
     }
   }, [detProd])
+
+  function filterCat(obj) {
+    if (obj.toLowerCase().includes(filtro.toLowerCase())) {
+      return true
+    }
+    return false
+  }
 
   const verDetalleProducto = (id) => {
     setIsBtnSave('Editar')
@@ -179,13 +188,32 @@ export default function Productos() {
     const formData = new FormData(form);
 
     const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
+
+    console.log(formJson)
   }
 
   const filtrarPor = (e) => {
     e.preventDefault()
-    if (filtro && tipoFiltro != null && tipoFiltro.length) {
-
+    let prod_ = productRef.current
+    if (tipoFiltro == 'categoria') {
+      setProducts(prod_.filter(prod => { return prod.cat_.toLowerCase().includes(filtro.toLowerCase()) }))
+    } else if (tipoFiltro == 'codigo') {
+      setProducts(prod_.filter(prod => { return prod.cod_.toLowerCase().includes(filtro.toLowerCase()) }))
+    } else if (tipoFiltro == 'producto') {
+      setProducts(prod_.filter(prod => { return prod.nom_.toLowerCase().includes(filtro.toLowerCase()) }))
+    } else if (tipoFiltro == 'marca') {
+      setProducts(prod_.filter(prod => { return prod.mar_.toLowerCase().includes(filtro.toLowerCase()) }))
+    } else if (tipoFiltro == 'unida') {
+      setProducts(prod_.filter(prod => { return prod.cat_.toLowerCase().includes(filtro.toLowerCase()) }))
+    } else if (tipoFiltro == 'precio') {
+      setProducts(prod => { return prod.pre_ === filtro })
+    } else if (tipoFiltro == 'cantidad') {
+      setProducts(prod => { return prod.can_ === filtro })
+    } else {
+      if (tipoFiltro == '') {
+        setFiltro('')
+        setProducts(prod_)
+      }
     }
   }
 
@@ -488,16 +516,18 @@ export default function Productos() {
                             className="m-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           >
                             <option value="">Selecionar</option>
-                            <option value="abarrotes">Categoria</option>
-                            <option value="bebidas">Codigo</option>
-                            <option value="embutios">Producto</option>
-                            <option value="lacteos">Marca</option>
-                            <option value="umedida">Unida Medida</option>
+                            <option value="categoria">Categoria</option>
+                            <option value="codigo">Codigo</option>
+                            <option value="producto">Producto</option>
+                            <option value="marca">Marca</option>
+                            <option value="unida">Unida Medida</option>
+                            <option value="precio">precio</option>
+                            <option value="cantidad">Cantidad</option>
                           </select>
                           <input
                             type="search"
                             id={`${idForm}-filtro-search`}
-                            name="filtro-search"
+                            name="filtro_search"
                             className="-mr-0.5 w-full block  min-w-0 flex-auto border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-gray-500 focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-gray-300"
                             placeholder="Buscar"
                             aria-label="Search"
