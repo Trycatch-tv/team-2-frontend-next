@@ -206,9 +206,9 @@ export default function Productos() {
     } else if (tipoFiltro == 'unida') {
       setProducts(prod_.filter(prod => { return prod.cat_.toLowerCase().includes(filtro.toLowerCase()) }))
     } else if (tipoFiltro == 'precio') {
-      setProducts(prod => { return prod.pre_ === filtro })
+      setProducts(prod_.filter(prod => { return prod.pre_ == filtro }))
     } else if (tipoFiltro == 'cantidad') {
-      setProducts(prod => { return prod.can_ === filtro })
+      setProducts(prod_.filter(prod => { return prod.can_ == filtro }))
     } else {
       if (tipoFiltro == '') {
         setFiltro('')
@@ -484,77 +484,79 @@ export default function Productos() {
         </Dialog>
       </Transition>
 
-      <div className="mt-40"></div>
-      <main className="px-4 md:px-10 mx-auto -m-16 w-10/12 m-auto mt-10 mb-20 relative">
-        <div className="w-full mb-12 px-4 -mt-36">
-          <div className="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
-            <div className="rounded-t mb-0 px-4 py-3 border-0">
-              <div className="flex flex-wrap items-center">
-                <div className="px-4 max-w-full flex-grow basis-1/2">
-                  <h2 className="font-semibold text-2xl text-blueGray-700 inline-flex">
-                    Productos
-                  </h2>
-                  <button
-                    onClick={crearProducto}
-                    type="button"
-                    className="text-white inline-flex float-right bg-emerald-800 hover:bg-emerald-900 focus:ring-4 focus:outline-none focus:ring-emerald-800/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-emerald-800/55 mr-2 mb-2"
-                  >
-                    <PlusIcon className="h-6 w-6 text-white" />
-                    <span>Agregar</span>
-                  </button>
-                </div>
-                <div className="basis-1/2">
-                  <div className="mb-3 xl:w-full">
-                    <div className="relative mb-4 flex-wrap items-stretch">
-                      <form id={`${idForm}-search-form`} onSubmit={filtrarPor}>
-                        <div className="flex relative">
-                          <select
-                            name="tipo_filtro"
-                            id={`${idForm}-tipofiltro`}
-                            value={tipoFiltro}
-                            onChange={e => { setTipoFiltro(e.target.value) }}
-                            className="m-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          >
-                            <option value="">Selecionar</option>
-                            <option value="categoria">Categoria</option>
-                            <option value="codigo">Codigo</option>
-                            <option value="producto">Producto</option>
-                            <option value="marca">Marca</option>
-                            <option value="unida">Unida Medida</option>
-                            <option value="precio">precio</option>
-                            <option value="cantidad">Cantidad</option>
-                          </select>
-                          <input
-                            type="search"
-                            id={`${idForm}-filtro-search`}
-                            name="filtro_search"
-                            className="-mr-0.5 w-full block  min-w-0 flex-auto border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-gray-500 focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-gray-300"
-                            placeholder="Buscar"
-                            aria-label="Search"
-                            aria-describedby="button-addon1"
-                            value={filtro}
-                            onChange={e => setFiltro(e.target.value)}
-                          />
-                          <button
-                            className="z-[2] flex items-center rounded-r px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-gray-700 hover:shadow-lg focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg"
-                            type="submit"
-                            id="button-addon1"
-                            data-te-ripple-init
-                            data-te-ripple-color="light"
-                          >
-                            <MagnifyingGlassIcon className="h-6 w-6 text-black" />
-                          </button>
-                        </div>
-                      </form>
+
+      <div class='container m-auto mb-8 md:mb-20'>
+        <main className="px-4 md:px-10 mx-auto -m-28 pt-10 w-full m-auto mt-10 relative">
+          <div className="w-full mb-12 px-4 -mt-36">
+            <div className="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
+              <div className="rounded-t mb-0 px-4 py-3 border-0">
+                <div className="flex flex-wrap items-center">
+                  <div className="px-4 max-w-full flex-grow basis-1/2">
+                    <h2 className="font-semibold text-2xl text-blueGray-700 inline-flex">
+                      Productos
+                    </h2>
+                    <button
+                      onClick={crearProducto}
+                      type="button"
+                      className="text-white inline-flex float-right bg-emerald-800 hover:bg-emerald-900 focus:ring-4 focus:outline-none focus:ring-emerald-800/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-emerald-800/55 mr-2 mb-2"
+                    >
+                      <PlusIcon className="h-6 w-6 text-white" />
+                      <span>Agregar</span>
+                    </button>
+                  </div>
+                  <div className="basis-1/2">
+                    <div className="mb-3 xl:w-full">
+                      <div className="relative mb-4 flex-wrap items-stretch">
+                        <form id={`${idForm}-search-form`} onSubmit={filtrarPor}>
+                          <div className="flex relative">
+                            <select
+                              name="tipo_filtro"
+                              id={`${idForm}-tipofiltro`}
+                              value={tipoFiltro}
+                              onChange={e => { setTipoFiltro(e.target.value) }}
+                              className="m-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            >
+                              <option value="">Selecionar</option>
+                              <option value="categoria">Categoria</option>
+                              <option value="codigo">Codigo</option>
+                              <option value="producto">Producto</option>
+                              <option value="marca">Marca</option>
+                              <option value="unida">Unida Medida</option>
+                              <option value="precio">precio</option>
+                              <option value="cantidad">Cantidad</option>
+                            </select>
+                            <input
+                              type="search"
+                              id={`${idForm}-filtro-search`}
+                              name="filtro_search"
+                              className="-mr-0.5 w-full block  min-w-0 flex-auto border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-gray-500 focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-gray-300"
+                              placeholder="Buscar"
+                              aria-label="Search"
+                              aria-describedby="button-addon1"
+                              value={filtro}
+                              onChange={e => setFiltro(e.target.value)}
+                            />
+                            <button
+                              className="z-[2] flex items-center rounded-r px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-gray-700 hover:shadow-lg focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg"
+                              type="submit"
+                              id="button-addon1"
+                              data-te-ripple-init
+                              data-te-ripple-color="light"
+                            >
+                              <MagnifyingGlassIcon className="h-6 w-6 text-black" />
+                            </button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <ProductList showProduct={verDetalleProducto} deleteProduct={handleDelete} products={products} />
             </div>
-            <ProductList showProduct={verDetalleProducto} deleteProduct={handleDelete} products={products} />
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </MainLayout>
   )
 }
