@@ -485,7 +485,7 @@ export default function Productos() {
       </Transition>
 
 
-      <div class='container m-auto mb-8 md:mb-20'>
+      <div className='container m-auto mb-8 md:mb-20'>
         <main className="px-4 md:px-10 mx-auto -m-28 pt-10 w-full m-auto mt-10 relative">
           <div className="w-full mb-12 px-4 -mt-36">
             <div className="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
@@ -537,13 +537,13 @@ export default function Productos() {
                               onChange={e => setFiltro(e.target.value)}
                             />
                             <button
-                              className="z-[2] flex items-center rounded-r px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-gray-700 hover:shadow-lg focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg"
+                              className="z-[2] flex items-center rounded-r px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-gray-700 hover:shadow-lg focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0 bg-blue-800 active:shadow-lg"
                               type="submit"
                               id="button-addon1"
                               data-te-ripple-init
                               data-te-ripple-color="light"
                             >
-                              <MagnifyingGlassIcon className="h-6 w-6 text-black" />
+                              <MagnifyingGlassIcon className="h-6 w-6 text-white" />
                             </button>
                           </div>
                         </form>
