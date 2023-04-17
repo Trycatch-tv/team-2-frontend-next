@@ -24,14 +24,22 @@ function useFormulario() {
   const [det_, getDet] = useState(0)
 
   return {
-    cod_, getCod,
-    nom_, getNom,
-    pre_, getPre,
-    can_, getCan,
-    catId, getCatId,
-    marId, getMarId,
-    uniId, getUniId,
-    det_, getDet
+    cod_,
+    getCod,
+    nom_,
+    getNom,
+    pre_,
+    getPre,
+    can_,
+    getCan,
+    catId,
+    getCatId,
+    marId,
+    getMarId,
+    uniId,
+    getUniId,
+    det_,
+    getDet
   }
 }
 
@@ -57,20 +65,28 @@ export default function Productos() {
   const [imageUrl, setImageUrl] = useState(null)
 
   const {
-    cod_, getCod,
-    nom_, getNom,
-    pre_, getPre,
-    can_, getCan,
-    catId, getCatId,
-    marId, getMarId,
-    uniId, getUniId,
-    det_, getDet
+    cod_,
+    getCod,
+    nom_,
+    getNom,
+    pre_,
+    getPre,
+    can_,
+    getCan,
+    catId,
+    getCatId,
+    marId,
+    getMarId,
+    uniId,
+    getUniId,
+    det_,
+    getDet
   } = useFormulario()
 
   useEffect(() => {
-    fetch("https://mocki.io/v1/577cc7a3-07d6-4e14-b1b0-f62ef81f4699")
-      .then(async res => await res.json()).
-      then(res => {
+    fetch('https://mocki.io/v1/577cc7a3-07d6-4e14-b1b0-f62ef81f4699')
+      .then(async res => await res.json())
+      .then(res => {
         let rta = res.Search?.map(products => ({
           id_: products.id,
           cod_: products.codigo,
@@ -88,7 +104,8 @@ export default function Productos() {
         }))
         productRef.current = rta
         setProducts(rta)
-      }).catch(err => {
+      })
+      .catch(err => {
         console.error(err)
       })
   }, [])
@@ -137,14 +154,14 @@ export default function Productos() {
     return false
   }
 
-  const verDetalleProducto = (id) => {
+  const verDetalleProducto = id => {
     setIsBtnSave('Editar')
     setIdProd(id)
     setColorIsBtnSave('bg-yellow-500')
     setMsnAlert(`Llego a ${isBtnSave} el producto`)
     setModal(true)
 
-    const getInfoProduct = products.filter((prod) => prod.id_ == id)
+    const getInfoProduct = products.filter(prod => prod.id_ == id)
     if (getInfoProduct) {
       setDetProd(getInfoProduct[0])
     }
@@ -170,45 +187,65 @@ export default function Productos() {
     setAlertConfirm(false)
     setIsOpen(true)
     setMsnAlert(`Se eliminó el producto`)
-    const filterProduct = products.filter((prod) => prod.cod_ != codProd)
+    const filterProduct = products.filter(prod => prod.cod_ != codProd)
     setProducts(filterProduct)
   }
 
-  const handleDelete = (cod) => {
+  const handleDelete = cod => {
     setAlertConfirm(true)
     setCodProd(cod)
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault()
     setModal(false)
     setIsOpen(true)
 
-    const form = e.target;
-    const formData = new FormData(form);
+    const form = e.target
+    const formData = new FormData(form)
 
-    const formJson = Object.fromEntries(formData.entries());
+    const formJson = Object.fromEntries(formData.entries())
 
     console.log(formJson)
   }
 
-  const filtrarPor = (e) => {
+  const filtrarPor = e => {
     e.preventDefault()
     let prod_ = productRef.current
     if (tipoFiltro == 'categoria') {
-      setProducts(prod_.filter(prod => { return prod.cat_.toLowerCase().includes(filtro.toLowerCase()) }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.cat_.toLowerCase().includes(filtro.toLowerCase())
+        })
+      )
     } else if (tipoFiltro == 'codigo') {
-      setProducts(prod_.filter(prod => { return prod.cod_.toLowerCase().includes(filtro.toLowerCase()) }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.cod_.toLowerCase().includes(filtro.toLowerCase())
+        })
+      )
     } else if (tipoFiltro == 'producto') {
-      setProducts(prod_.filter(prod => { return prod.nom_.toLowerCase().includes(filtro.toLowerCase()) }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.nom_.toLowerCase().includes(filtro.toLowerCase())
+        })
+      )
     } else if (tipoFiltro == 'marca') {
-      setProducts(prod_.filter(prod => { return prod.mar_.toLowerCase().includes(filtro.toLowerCase()) }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.mar_.toLowerCase().includes(filtro.toLowerCase())
+        })
+      )
     } else if (tipoFiltro == 'unida') {
-      setProducts(prod_.filter(prod => { return prod.cat_.toLowerCase().includes(filtro.toLowerCase()) }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.cat_.toLowerCase().includes(filtro.toLowerCase())
+        })
+      )
     } else if (tipoFiltro == 'precio') {
       setProducts(prod_.filter(prod => { return prod.pre_ == filtro }))
     } else if (tipoFiltro == 'cantidad') {
-      setProducts(prod_.filter(prod => { return prod.can_ == filtro }))
+      setProducts(prod_.filter(prod => { return prod.can_ == filtro })) 
     } else {
       if (tipoFiltro == '') {
         setFiltro('')
@@ -218,10 +255,7 @@ export default function Productos() {
   }
 
   return (
-    <MainLayout
-      title="Productoss"
-      description="pagina para gestionar productos"
-    >
+    <MainLayout title="Productos" description="pagina para gestionar productos">
       <Transition show={isOpen} as={Fragment}>
         <Dialog onClose={() => setIsOpen(false)}>
           <Transition.Child
@@ -260,7 +294,6 @@ export default function Productos() {
                     </div>
                   </div>
                 </Dialog.Panel>
-
               </Transition.Child>
             </div>
           </div>
@@ -358,37 +391,107 @@ export default function Productos() {
                       <Dialog.Title>Producto</Dialog.Title>
                     </div>
                     <div className="mt-2 mb-4 pt-6">
-
                       <form method="post" onSubmit={handleSubmit}>
                         <div className="grid md:grid-cols-2 md:gap-6">
-                          <div className='&_select]:bg-gray-50 [&_select]:border [&_select]:border-gray-300 [&_select]:text-gray-900 [&_select]:text-sm [&_select]:rounded-lg [&_select]:focus:ring-blue-500 [&_select]:focus:border-blue-500 [&_select]:block [&_select]:w-full [&_select]:p-2.5'>
+                          <div className="&_select]:bg-gray-50 [&_select]:border [&_select]:border-gray-300 [&_select]:text-gray-900 [&_select]:text-sm [&_select]:rounded-lg [&_select]:focus:ring-blue-500 [&_select]:focus:border-blue-500 [&_select]:block [&_select]:w-full [&_select]:p-2.5">
                             <div className="grid md:grid-cols-2 md:gap-6">
                               <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="cod_" onChange={e => getCod(e.target.value)} value={cod_} id={`${idForm}-codigo`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor={`${idForm}-codigo`} className="peer-focus:font-medium absolute text-sm text-gray-500 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Código</label>
-                                <input type="hidden" name="id_" id={`${idForm}-id`} value={idProd} />
+                                <input
+                                  type="text"
+                                  name="cod_"
+                                  onChange={e => getCod(e.target.value)}
+                                  value={cod_}
+                                  id={`${idForm}-codigo`}
+                                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                  placeholder=" "
+                                  required
+                                />
+                                <label
+                                  htmlFor={`${idForm}-codigo`}
+                                  className="peer-focus:font-medium absolute text-sm text-gray-500 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                >
+                                  Código
+                                </label>
+                                <input
+                                  type="hidden"
+                                  name="id_"
+                                  id={`${idForm}-id`}
+                                  value={idProd}
+                                />
                               </div>
                               <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="prod_" onChange={e => getNom(e.target.value)} value={nom_} id={`${idForm}-nombre`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor={`${idForm}-nombre`} className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Producto</label>
+                                <input
+                                  type="text"
+                                  name="prod_"
+                                  onChange={e => getNom(e.target.value)}
+                                  value={nom_}
+                                  id={`${idForm}-nombre`}
+                                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                  placeholder=" "
+                                  required
+                                />
+                                <label
+                                  htmlFor={`${idForm}-nombre`}
+                                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                >
+                                  Producto
+                                </label>
                               </div>
                             </div>
 
                             <div className="grid md:grid-cols-2 md:gap-6">
                               <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="pre_" onChange={e => getPre(e.target.value)} value={pre_} id={`${idForm}-precio`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor={`${idForm}-precio`} className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Precio</label>
+                                <input
+                                  type="text"
+                                  name="pre_"
+                                  onChange={e => getPre(e.target.value)}
+                                  value={pre_}
+                                  id={`${idForm}-precio`}
+                                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                  placeholder=" "
+                                  required
+                                />
+                                <label
+                                  htmlFor={`${idForm}-precio`}
+                                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                >
+                                  Precio
+                                </label>
                               </div>
                               <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="can_" onChange={e => getCan(e.target.value)} value={can_} id={`${idForm}-cantidad`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor={`${idForm}-cantidad`} className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cantidad</label>
+                                <input
+                                  type="text"
+                                  name="can_"
+                                  onChange={e => getCan(e.target.value)}
+                                  value={can_}
+                                  id={`${idForm}-cantidad`}
+                                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                  placeholder=" "
+                                  required
+                                />
+                                <label
+                                  htmlFor={`${idForm}-cantidad`}
+                                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                >
+                                  Cantidad
+                                </label>
                               </div>
                             </div>
 
                             <div className="grid md:grid-cols-3 md:gap-6">
                               <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor={`${idForm}-categoria`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Categoria</label>
-                                <select id={`${idForm}-categoria`} name="cat_" value={catId} onChange={e => getCatId(e.target.value)}>
+                                <label
+                                  htmlFor={`${idForm}-categoria`}
+                                  className="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+                                >
+                                  Categoria
+                                </label>
+                                <select
+                                  id={`${idForm}-categoria`}
+                                  name="cat_"
+                                  value={catId}
+                                  onChange={e => getCatId(e.target.value)}
+                                >
                                   <option value="">Selecionar</option>
                                   <option value="1">Bebidas</option>
                                   <option value="2">Embutidos</option>
@@ -397,8 +500,18 @@ export default function Productos() {
                                 </select>
                               </div>
                               <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor={`${idForm}-marca`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Marca</label>
-                                <select id={`${idForm}-marca`} name="mar_" value={marId} onChange={e => getMarId(e.target.value)}>
+                                <label
+                                  htmlFor={`${idForm}-marca`}
+                                  className="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+                                >
+                                  Marca
+                                </label>
+                                <select
+                                  id={`${idForm}-marca`}
+                                  name="mar_"
+                                  value={marId}
+                                  onChange={e => getMarId(e.target.value)}
+                                >
                                   <option value="">Selecionar</option>
                                   <option value="1">Inka kola</option>
                                   <option value="2">Kola inglesa</option>
@@ -411,8 +524,18 @@ export default function Productos() {
                                 </select>
                               </div>
                               <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor={`${idForm}-unidadmedida`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Unidad Medida</label>
-                                <select id={`${idForm}-unidadmedida`} name="uni_" value={uniId} onChange={e => getUniId(e.target.value)}>
+                                <label
+                                  htmlFor={`${idForm}-unidadmedida`}
+                                  className="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+                                >
+                                  Unidad Medida
+                                </label>
+                                <select
+                                  id={`${idForm}-unidadmedida`}
+                                  name="uni_"
+                                  value={uniId}
+                                  onChange={e => getUniId(e.target.value)}
+                                >
                                   <option value="">Selecionar</option>
                                   <option value="1">Caja 6 unidades</option>
                                   <option value="2">1 Lt</option>
@@ -427,8 +550,21 @@ export default function Productos() {
                               </div>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                              <label htmlFor={`${idForm}-descripcion`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Descripción</label>
-                              <textarea onChange={e => getDet(e.target.value)} name="des_" value={det_} id={`${idForm}-descripcion`} rows={2} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-0 border-b-2 border-gray-300 focus:ring-blue-500 focus:border-0 focus:border-b-2 focus:border-blue-600" placeholder="Descripción"></textarea>
+                              <label
+                                htmlFor={`${idForm}-descripcion`}
+                                className="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+                              >
+                                Descripción
+                              </label>
+                              <textarea
+                                onChange={e => getDet(e.target.value)}
+                                name="des_"
+                                value={det_}
+                                id={`${idForm}-descripcion`}
+                                rows={2}
+                                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-0 border-b-2 border-gray-300 focus:ring-blue-500 focus:border-0 focus:border-b-2 focus:border-blue-600"
+                                placeholder="Descripción"
+                              ></textarea>
                             </div>
                           </div>
                           <div>
@@ -445,15 +581,21 @@ export default function Productos() {
                                 }
                                 className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                 aria-describedby={`${idForm}-imagen_help`}
-                                id={`${idForm}-imagen`} name="file"
+                                id={`${idForm}-imagen`}
+                                name="file"
                                 type="file"
                               />
-                              <input type="hidden" value={imageUrl} id={`${idForm}-img`} name='img_' />
+                              <input
+                                type="hidden"
+                                value={imageUrl}
+                                id={`${idForm}-img`}
+                                name="img_"
+                              />
                               {imageUrl && (
                                 <img
                                   src={imageUrl}
                                   alt={nom_}
-                                  className='h-52 w-max-full'
+                                  className="h-52 w-max-full"
                                 />
                               )}
                             </div>
@@ -474,7 +616,6 @@ export default function Productos() {
                           <span>Cancelar</span>
                         </button>
                       </form>
-
                     </div>
                   </div>
                 </Dialog.Panel>
@@ -483,7 +624,6 @@ export default function Productos() {
           </div>
         </Dialog>
       </Transition>
-
 
       <div class='container m-auto mb-8 md:mb-20'>
         <main className="px-4 md:px-10 mx-auto -m-28 pt-10 w-full m-auto mt-10 relative">
@@ -548,12 +688,18 @@ export default function Productos() {
                           </div>
                         </form>
                       </div>
+
                     </div>
                   </div>
                 </div>
               </div>
               <ProductList showProduct={verDetalleProducto} deleteProduct={handleDelete} products={products} />
             </div>
+            <ProductList
+              showProduct={verDetalleProducto}
+              deleteProduct={handleDelete}
+              products={products}
+            />
           </div>
         </main>
       </div>
