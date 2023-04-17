@@ -1,0 +1,14 @@
+.container {
+  width: 100%;
+  box-shadow: var(--box-shadow);
+}
+
+.container table {
+  width: 100%;
+}
+.container table thead {
+  height: 50px;
+  font-size: large;
+}
+.container table thead tr {
+}

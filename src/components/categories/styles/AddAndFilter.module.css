@@ -1,0 +1,78 @@
+.container {
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  box-shadow: var(--box-shadow);
+}
+
+.title h2 {
+  font-size: x-large;
+  font-weight: 800;
+}
+
+.add button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 110px;
+  border-radius: 8px;
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.add :hover {
+  background-color: var(--color-primary-dark);
+}
+
+.filter {
+  width: max-content;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter select {
+  height: 40px;
+  background-color: var(--color-secondary);
+  color: white;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.filter input {
+  border: 1px solid black;
+  height: 40px;
+  width: 450px;
+}
+
+.filter button {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-secondary);
+  color: white;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+@media (max-width: 700px) {
+  .container {
+    width: 150%;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    align-items: center;
+  }
+  .filter input {
+    width: 200px;
+  }
+}
