@@ -711,11 +711,6 @@ export default function Productos() {
                 products={products}
               />
             </div>
-            {/* <ProductList
-              showProduct={verDetalleProducto}
-              deleteProduct={handleDelete}
-              products={products}
-            /> */}
           </div>
         </main>
       </div>
