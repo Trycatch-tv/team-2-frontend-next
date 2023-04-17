@@ -243,9 +243,17 @@ export default function Productos() {
         })
       )
     } else if (tipoFiltro == 'precio') {
-      setProducts(prod_.filter(prod => { return prod.pre_ == filtro }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.pre_ == filtro
+        })
+      )
     } else if (tipoFiltro == 'cantidad') {
-      setProducts(prod_.filter(prod => { return prod.can_ == filtro })) 
+      setProducts(
+        prod_.filter(prod => {
+          return prod.can_ == filtro
+        })
+      )
     } else {
       if (tipoFiltro == '') {
         setFiltro('')
@@ -625,7 +633,7 @@ export default function Productos() {
         </Dialog>
       </Transition>
 
-      <div class='container m-auto mb-8 md:mb-20'>
+      <div class="container m-auto mb-8 md:mb-20">
         <main className="px-4 md:px-10 mx-auto -m-28 pt-10 w-full m-auto mt-10 relative">
           <div className="w-full mb-12 px-4 -mt-36">
             <div className="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
@@ -647,13 +655,18 @@ export default function Productos() {
                   <div className="basis-1/2">
                     <div className="mb-3 xl:w-full">
                       <div className="relative mb-4 flex-wrap items-stretch">
-                        <form id={`${idForm}-search-form`} onSubmit={filtrarPor}>
+                        <form
+                          id={`${idForm}-search-form`}
+                          onSubmit={filtrarPor}
+                        >
                           <div className="flex relative">
                             <select
                               name="tipo_filtro"
                               id={`${idForm}-tipofiltro`}
                               value={tipoFiltro}
-                              onChange={e => { setTipoFiltro(e.target.value) }}
+                              onChange={e => {
+                                setTipoFiltro(e.target.value)
+                              }}
                               className="m-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             >
                               <option value="">Selecionar</option>
@@ -688,18 +701,21 @@ export default function Productos() {
                           </div>
                         </form>
                       </div>
-
                     </div>
                   </div>
                 </div>
               </div>
-              <ProductList showProduct={verDetalleProducto} deleteProduct={handleDelete} products={products} />
+              <ProductList
+                showProduct={verDetalleProducto}
+                deleteProduct={handleDelete}
+                products={products}
+              />
             </div>
-            <ProductList
+            {/* <ProductList
               showProduct={verDetalleProducto}
               deleteProduct={handleDelete}
               products={products}
-            />
+            /> */}
           </div>
         </main>
       </div>
