@@ -5,7 +5,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 const navigation = [
   { name: 'Productos', href: '/productos', current: true },
   { name: 'Categorias', href: '/categories', current: false },
-  { name: 'Marcas', href: '#', current: false }
+  { name: 'Marcas', href: '#', current: false },
+  { name: 'Medidas', href: '/measures', current: false }
 ]
 
 function classNames(...classes) {
@@ -17,11 +18,11 @@ export const Navbar = () => {
     <Disclosure as="nav" className="bg-gray-100">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="sm:px-1 ">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-800 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-800 hover:bg-green-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -47,8 +48,8 @@ export const Navbar = () => {
                     />
                   </a>
                 </div>
-                <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
+                <div className="hidden sm:ml-2 sm:block">
+                  <div className="flex space-x-3">
                     {navigation.map(item => (
                       <a
                         key={item.name}
@@ -57,7 +58,7 @@ export const Navbar = () => {
                           item.current
                             ? 'bg-emerald-800 text-white'
                             : 'text-gray-800 hover:bg-emerald-800 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          'rounded-md px-3 py-2 text-sm'
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >
@@ -67,18 +68,18 @@ export const Navbar = () => {
                   </div>
                 </div>
               </div>
-              <div className=" absolute inset-y-0 right-0 flex items-center pr-2  sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <div className=" absolute inset-y-2 right-0 flex items-center pr-2  sm:static sm:inset-auto sm:ml-3 sm:pr-0">
                 <button
                   type="button"
-                  className="hidden md:ml-6 sm:block mr-3 rounded-lg transparent p-3 text-gray-900 outline outline-offset-2 outline-2 outline-emerald-800 hover:text-dark"
+                  className="hidden md:ml-3 sm:block rounded-lg transparent p-2 text-gray-900 hover:text-black"
                 >
-                  Login
+                  Sign In
                 </button>
                 <button
                   type="button"
-                  className="hidden md:ml-6 sm:block rounded-lg bg-emerald-800 p-3 text-gray-100 hover:text-white"
+                  className="hidden md:ml-3 sm:block rounded-lg bg-gray-500 p-2 text-gray-100 hover:text-white hover:bg-green-900"
                 >
-                  Register
+                  Sign Up
                 </button>
 
                 {/* <button
@@ -168,25 +169,25 @@ export const Navbar = () => {
                     item.current
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
+                    'block rounded-md px-3 py-2'
                   )}
                   aria-current={item.current ? 'page' : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
               ))}
-              <div className="mt-3 mb-3">
+              <div className="space-y-1 px-2 pb-3 pt-2">
                 <button
                   type="button"
-                  className="mr-3 rounded-lg transparent p-2 text-gray-900 outline outline-offset-1 outline-1 outline-emerald-800 hover:text-dark"
+                  className="mr-5 rounded-lg transparent  p-2 text-gray-900  hover:text-blue"
                 >
-                  Login
+                  Sign In
                 </button>
                 <button
                   type="button"
                   className="rounded-lg bg-emerald-800 p-2 text-gray-100 hover:text-white"
                 >
-                  Register
+                  Sign Up
                 </button>
               </div>
             </div>
