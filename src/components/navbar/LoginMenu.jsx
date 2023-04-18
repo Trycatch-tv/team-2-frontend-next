@@ -6,17 +6,17 @@ export const LoginMenu = () => {
       <NextLink href="/auth/login">
         <button
           type="button"
-          className="hidden md:ml-6 sm:block mr-3 rounded-lg transparent p-3 text-gray-900 outline outline-offset-2 outline-2 outline-emerald-800 hover:text-dark"
+          className="hidden sm:block rounded-lg transparent p-2 text-gray-700 hover:text-emerald-800"
         >
-          Login
+          Sign In
         </button>
       </NextLink>
       <NextLink href="/auth/register">
         <button
           type="button"
-          className="hidden md:ml-6 sm:block rounded-lg bg-emerald-800 p-3 text-gray-100 hover:text-white"
+          className="hidden md:ml-4 sm:block rounded-lg bg-gray-500 p-2 text-gray-100 hover:text-white hover:bg-green-900"
         >
-          Register
+          Sign Up
         </button>
       </NextLink>
     </>
