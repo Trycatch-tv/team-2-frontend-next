@@ -11,8 +11,10 @@ import FormAddCategory from '@/components/categories/FormAddCategory'
 export default function index() {
   const [isOpen, setIsOpen] = useState(false)
   const [data, setData] = useState({
+    id: '',
     code: '',
-    category: ''
+    category: '',
+    status: ''
   })
 
   const handlerInputChange = e => {
