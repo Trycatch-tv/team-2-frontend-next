@@ -7,8 +7,36 @@
   width: 100%;
 }
 .container table thead {
+  width: 100%;
   height: 50px;
   font-size: large;
 }
-.container table thead tr {
+.container table tbody {
+  width: 100%;
+  height: 40px;
+  font-size: large;
+  font-weight: 500;
+}
+
+.container table tbody tr {
+  width: 100%;
+  display: table-row;
+  height: 70px;
+}
+.container table tbody :hover {
+  background-color: var(--color-primary-light);
+}
+.container table tbody tr td {
+  text-align: center;
+}
+
+.container table tbody tr td button svg {
+  height: 40px;
+}
+
+.container table tbody tr td button :hover {
+  background-color: none;
+  border-radius: 5px;
+  padding: 3px;
+  color: white;
 }

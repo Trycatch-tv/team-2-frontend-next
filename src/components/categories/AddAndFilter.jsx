@@ -17,9 +17,12 @@ export default function AddAndFilter({ title, handlerState }) {
       <div className={styles.filter}>
         <div>
           <select name="" id="">
-            <option value="">Selecionar</option>
-            <option value="">Nombre</option>
+            <option selected disabled value="">
+              Selecionar
+            </option>
             <option value="">Codigo</option>
+            <option value="">Categoria</option>
+            <option value="">Estatus</option>
           </select>
         </div>
         <div>

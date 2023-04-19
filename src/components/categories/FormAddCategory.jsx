@@ -35,14 +35,19 @@ export default function FormAddCategory({
           </div>
           <div className={styles.property}>
             <label htmlFor="status">Estatus:</label>
-            <select name="status" onChange={handlerInputChange}>
-              <option value="true">Activa</option>
-              <option value="false">Inactiva</option>
+            <select required name="status" onChange={handlerInputChange}>
+              <option selected disabled>
+                Selecionar
+              </option>
+              <option value="activo">Activa</option>
+              <option value="inactivo">Inactiva</option>
             </select>
           </div>
           <div>
             <div className={styles.buttons}>
-              <button className={styles.buttonSave}>Guardar</button>
+              <button className={styles.buttonSave} onClick={setState}>
+                Guardar
+              </button>
               <button className={styles.buttonCancel} onClick={setState}>
                 Cancelar
               </button>
