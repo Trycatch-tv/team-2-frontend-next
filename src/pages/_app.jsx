@@ -1,11 +1,14 @@
 import '@/styles/globals.css'
-export default function App({ Component, pageProps }) {
-  const getLayout = Component.getLayout ?? (page => page)
+import { Provider } from 'react-redux'
 
-  // return (
-  //   <>
-  //     <Component {...pageProps} />
-  //   </>
-  // )
-  return getLayout(<Component {...pageProps} />)
+import { store } from '@/store'
+
+export default function App({ Component, pageProps }) {
+  return (
+    <>
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
+    </>
+  )
 }

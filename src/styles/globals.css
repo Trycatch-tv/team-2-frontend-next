@@ -5,6 +5,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+:root {
+  --color-primary: #065f46ff;
+  --color-primary-dark: #065146ff;
+  --color-primary-light: #065f4696;
+  --color-secondary: #374151ff;
+  --color-secondary-dark: #2a323fff;
+
+  --box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
