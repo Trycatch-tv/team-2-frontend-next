@@ -15,6 +15,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.17",
+    "@material-tailwind/react": "^1.4.2",
     "@next/font": "13.1.6",
     "@reduxjs/toolkit": "^1.9.4",
     "@types/node": "18.11.18",
