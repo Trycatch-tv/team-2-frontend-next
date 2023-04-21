@@ -1,6 +1,7 @@
 import About from '@/components/aboutSection/About'
 import Header from '@/components/header/Header'
 import Card from '@/components/teamCard/Card'
+import Technologies from '@/components/technologies/Technologies'
 import { MainLayout } from '@/layout/MainLayout'
 import { Inter } from '@next/font/google'
 import Image from 'next/image'
@@ -11,6 +12,7 @@ export default function HomePage() {
   return (
     <MainLayout title="E-Commerce | Home">
       <Header />
+      <Technologies />
       <About />
 
       <Card
