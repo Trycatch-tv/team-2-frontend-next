@@ -1,16 +1,18 @@
 import React from 'react'
-import styles from './styles/FormAddCategory.module.css'
+import styles from './styles/FormCategory.module.css'
 
-export default function FormAddCategory({
-  title,
-  setState,
+export default function FormCategory({
   handlerInputChange,
   data,
-  handlerForm
+  handlerForm,
+  saveCategory,
+  updateCategory
 }) {
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{title}</div>
+      <div className={styles.title}>
+        {data.id == '' ? 'Agregar Categoria' : 'Actualizar categoria'}
+      </div>
       <div className={styles.form}>
         <form onSubmit={handlerForm}>
           <div className={styles.property}>
@@ -35,9 +37,14 @@ export default function FormAddCategory({
           </div>
           <div className={styles.property}>
             <label htmlFor="status">Estatus:</label>
-            <select required name="status" onChange={handlerInputChange}>
-              <option selected disabled>
-                Selecionar
+            <select
+              required
+              defaultValue={'default'}
+              name="status"
+              onChange={handlerInputChange}
+            >
+              <option value="default" disabled>
+                Seleccionar
               </option>
               <option value="activo">Activa</option>
               <option value="inactivo">Inactiva</option>
@@ -45,12 +52,17 @@ export default function FormAddCategory({
           </div>
           <div>
             <div className={styles.buttons}>
-              <button className={styles.buttonSave} onClick={setState}>
-                Guardar
-              </button>
-              <button className={styles.buttonCancel} onClick={setState}>
-                Cancelar
-              </button>
+              {data.id == '' ? (
+                <button className={styles.buttonSave} onClick={saveCategory}>
+                  Guardar
+                </button>
+              ) : (
+                <button className={styles.buttonSave} onClick={updateCategory}>
+                  Actualizar
+                </button>
+              )}
+
+              <button className={styles.buttonCancel}>Cancelar</button>
             </div>
           </div>
         </form>

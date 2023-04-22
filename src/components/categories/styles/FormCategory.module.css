@@ -1,0 +1,54 @@
+.container {
+  padding: 5%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4em;
+}
+.title {
+  font-size: large;
+  font-weight: 800;
+}
+.form form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5em;
+}
+.form form input {
+  text-align: center;
+  height: 40px;
+  border: 1px solid;
+  border-radius: 8px;
+}
+.form form select {
+  text-align: center;
+  height: 40px;
+  border: 1px solid;
+  border-radius: 8px;
+}
+
+.property {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.buttons button {
+  width: 110px;
+  height: 40px;
+  border-radius: 8px;
+  color: white;
+}
+.buttonSave {
+  background-color: var(--color-primary);
+}
+.buttonCancel {
+  background-color: var(--color-secondary);
+}
