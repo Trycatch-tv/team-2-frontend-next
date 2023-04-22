@@ -10,7 +10,7 @@ import { classNames } from './classNames'
 const navigation = [
   { name: 'Productos', href: '/productos', current: true },
   { name: 'Categorias', href: '/categories', current: false },
-  { name: 'Marcas', href: '#', current: false },
+  { name: 'Marcas', href: '/brands', current: false },
   { name: 'Medidas', href: '/measures', current: false }
 ]
 

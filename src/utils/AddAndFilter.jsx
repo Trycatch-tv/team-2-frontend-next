@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 import styles from './styles/AddAndFilter.module.css'
 
-export default function AddAndFilter({ title, handlerState }) {
+export default function AddAndFilter({ title, handlerState, optionsSelect }) {
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -16,13 +16,16 @@ export default function AddAndFilter({ title, handlerState }) {
       </div>
       <div className={styles.filter}>
         <div>
-          <select name="" id="">
-            <option selected disabled value="">
-              Selecionar
+          <select name="" defaultValue={'default'}>
+            <option value="default" disabled>
+              Seleccionar
             </option>
-            <option value="">Codigo</option>
-            <option value="">Categoria</option>
-            <option value="">Estatus</option>
+            {optionsSelect &&
+              optionsSelect.map((option, i) => (
+                <option key={i} value={option}>
+                  {option}
+                </option>
+              ))}
           </select>
         </div>
         <div>
