@@ -1,6 +1,5 @@
 import React from 'react'
 
-import styles from '../categories/styles/CategoriesList.module.css'
 import {
   PencilSquareIcon,
   PlusIcon,
