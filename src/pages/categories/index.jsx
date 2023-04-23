@@ -13,6 +13,10 @@ export default function index() {
   const [isAlertConfirm, setIsAlertConfirm] = useState(false)
   const [responseAPI, setResponseAPI] = useState([])
   const [arrayCategories, setArrayCategories] = useState([])
+  const [search, setSearch] = useState({
+    select: '',
+    value: ''
+  })
   const [category, setCategory] = useState({
     id: '',
     code: '',
@@ -43,6 +47,18 @@ export default function index() {
       code: item.codigo,
       category: item.categoria,
       status: item.estado
+    })
+  }
+  const handlerFilter = e => {
+    const { name, type } = e.target
+    setSearch({
+      ...search,
+      [name]:
+        type == 'text'
+          ? e.target.value
+          : type == 'checkbox'
+          ? e.target.checkbox
+          : e.target.value
     })
   }
 
@@ -99,6 +115,15 @@ export default function index() {
     setIsOpen(false)
   }
 
+  const array = !search.value
+    ? arrayCategories
+    : arrayCategories.filter(item =>
+        item[`${search.select}`]
+          .toString()
+          .toLowerCase()
+          .includes(search.value.toString().toLowerCase())
+      )
+
   return (
     <MainLayout
       title="Categorias"
@@ -123,12 +148,13 @@ export default function index() {
       />
       <div className={styles.table}>
         <AddAndFilter
+          handlerFilter={handlerFilter}
           title={'Categorias'}
           handlerState={openFormAdd}
-          optionsSelect={['Codigo', 'Categoria', 'Estado']}
+          optionsSelect={['codigo', 'categoria', 'estado']}
         />
         <ItemList
-          array={arrayCategories}
+          array={array}
           headerList={['Codigo', 'Categoria', 'Estado', 'Editar', 'Eliminar']}
           valuesList={['codigo', 'categoria', 'estado']}
           deleteItem={handlerDeleteItem}
