@@ -110,7 +110,7 @@ export default function index() {
   const array = !search.value
     ? arrayBrands
     : arrayBrands.filter(item =>
-        item[`${search.select}`]
+        item[`${search.select}` !== '' ? `${search.select}` : 'marca']
           .toString()
           .toLowerCase()
           .includes(search.value.toString().toLowerCase())
