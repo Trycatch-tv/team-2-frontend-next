@@ -40,6 +40,7 @@
 
 .filter select {
   height: 40px;
+  width: 100%;
   background-color: var(--color-secondary);
   color: white;
   border-top-left-radius: 8px;
@@ -48,9 +49,10 @@
 }
 
 .filter input {
+  display: block;
   border: 1px solid black;
   height: 40px;
-  width: 100%;
+  width: 450px;
   padding-left: 5%;
 }
 
@@ -68,13 +70,13 @@
 
 @media (max-width: 700px) {
   .container {
-    width: 150%;
+    width: 100%;
     display: flex;
     justify-content: center;
     gap: 1em;
     align-items: center;
   }
   .filter input {
-    width: 200px;
+    width: 100%;
   }
 }
