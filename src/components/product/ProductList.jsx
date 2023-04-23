@@ -9,10 +9,9 @@ export function ProductList({ products, deleteProduct, showProduct }) {
             <table className="items-center w-full bg-transparent border-collapse">
                 <thead>
                     <tr className="[&_th]:px-6 [&_th]:align-middle [&_th]:border [&_th]:border-solid [&_th]:py-3 [&_th]:text-xl [&_th]:border-l-0 [&_th]:border-r-0 [&_th]:whitespace-nowrap [&_th]:font-semibold [&_th]:text-left [&_th]:text-oscuro">
-                        <th>Imagen</th>
                         <th>Categoría</th>
-                        <th>Código</th>
                         <th>Producto</th>
+                        <th>Descripción</th>
                         <th>Marca</th>
                         <th>Unida Medida</th>
                         <th>Precio</th>
@@ -26,10 +25,9 @@ export function ProductList({ products, deleteProduct, showProduct }) {
                             (products.map((product, index) => {
                                 return (
                                     <tr key={product.cod_}>
-                                        <td className='text-center'><img className="h-10" src={product.img_} alt={product.des_} /></td>
                                         <td>{product.cat_}</td>
-                                        <td>{product.cod_}</td>
                                         <td>{product.nom_}</td>
+                                        <td>{product.des_}</td>
                                         <td>{product.mar_}</td>
                                         <td>{product.uni_}</td>
                                         <td><div className='flex justify-between'>$ <span>{product.pre_}</span></div></td>
@@ -44,7 +42,7 @@ export function ProductList({ products, deleteProduct, showProduct }) {
 
                                             <button
                                                 className="bg-red-500 hover:bg-red-700 h-10 w-10 text-white font-bold p-2 rounded"
-                                                onClick={() => deleteProduct(product.cod_)}
+                                                onClick={() => deleteProduct(product.cod_, product.id_)}
                                             >
                                                 <TrashIcon className="h-6 w-6 text-white" />
                                             </button>

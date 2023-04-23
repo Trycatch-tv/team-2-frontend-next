@@ -1,54 +1,55 @@
-import { useState, Fragment, useEffect, useId, useRef } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import { useState, useEffect, useId, useRef } from 'react'
+
 import {
   PlusIcon,
-  ArchiveBoxIcon,
-  XMarkIcon,
-  MagnifyingGlassIcon,
-  ExclamationCircleIcon,
-  CircleStackIcon,
-  CheckCircleIcon
+  MagnifyingGlassIcon
 } from '@heroicons/react/24/outline'
 import { MainLayout } from '@/layout/MainLayout'
 import { ProductList } from '@/components/product/ProductList'
-import { fromJSON } from 'postcss'
+import Alerta from '@/utils/Alert'
+import ModalForm from '@/utils/ModalForm'
+import FormProduct from '@/components/product/FormProduct'
 
 function useFormulario() {
-  const [cod_, getCod] = useState(0)
-  const [nom_, getNom] = useState(0)
-  const [pre_, getPre] = useState(0)
-  const [can_, getCan] = useState(0)
-  const [catId, getCatId] = useState(0)
-  const [marId, getMarId] = useState(0)
-  const [uniId, getUniId] = useState(0)
-  const [det_, getDet] = useState(0)
+  const [idProd, setIdProd] = useState(0)
+  const [codProd, setCodProd] = useState(0)
 
   return {
-    cod_, getCod,
-    nom_, getNom,
-    pre_, getPre,
-    can_, getCan,
-    catId, getCatId,
-    marId, getMarId,
-    uniId, getUniId,
-    det_, getDet
+    idProd,
+    setIdProd,
+    codProd,
+    setCodProd
   }
 }
 
 export default function Productos() {
   const idForm = useId()
   const [products, setProducts] = useState([])
-  const [idProd, setIdProd] = useState(0)
-  const [codProd, setCodProd] = useState(0)
+
+  let completeButtonRef = useRef(null)
+
+  const {
+    idProd,
+    setIdProd,
+    codProd,
+    setCodProd
+  } = useFormulario()
+
   const [msnAlert, setMsnAlert] = useState('')
-  const [detProd, setDetProd] = useState({})
+
   const [tipoFiltro, setTipoFiltro] = useState('')
   const [filtro, setFiltro] = useState('')
-  const [productFiltrado, setProductFiltrado] = useState({})
-  const productRef = useRef(null)
 
+  const [productFiltrado, setProductFiltrado] = useState({})
+
+  const productRef = useRef(null)
+  const categoryRef = useRef(null)
+  const brandRef = useRef(null)
+  const uniMedRef = useRef(null)
+
+
+  const [tipoAlert, setTipoAlert] = useState(2)
   const [isOpen, setIsOpen] = useState(false)
-  const [isAlertConfirm, setAlertConfirm] = useState(false)
   const [isModal, setModal] = useState(false)
 
   let [isBtnSave, setIsBtnSave] = useState('Guardar')
@@ -56,97 +57,118 @@ export default function Productos() {
   const [selectedImage, setSelectedImage] = useState(null)
   const [imageUrl, setImageUrl] = useState(null)
 
-  const {
-    cod_, getCod,
-    nom_, getNom,
-    pre_, getPre,
-    can_, getCan,
-    catId, getCatId,
-    marId, getMarId,
-    uniId, getUniId,
-    det_, getDet
-  } = useFormulario()
+  const [detProd, setDetProd] = useState({
+    id_: '',
+    cod_: '',
+    nom_: '',
+    des_: '',
+    can_: '',
+    pre_: '',
+    catId: '',
+    cat_: '',
+    marId: '',
+    mar_: '',
+    unmId: '',
+    uni_: '',
+    img_: '',
+    file: ''
+  })
 
-  useEffect(() => {
-    fetch("https://mocki.io/v1/577cc7a3-07d6-4e14-b1b0-f62ef81f4699")
-      .then(async res => await res.json()).
-      then(res => {
-        let rta = res.Search?.map(products => ({
+  const getInfoProducts = () => {
+    fetch('https://tea2.herokuapp.com/productos/all')
+      .then(async res => await res.json())
+      .then(res => {
+        productRef.current = res?.map(products => ({
           id_: products.id,
-          cod_: products.codigo,
+          cod_: "COD" + products.id,
           nom_: products.nombre,
           des_: products.descripcion,
           can_: products.cantidad,
           pre_: products.precio,
-          catId: products.categoriaId,
-          cat_: products.categoria,
-          marId: products.marcaId,
-          mar_: products.marca,
-          unmId: products.unidadmediadId,
-          uni_: products.unidadmedida,
-          img_: products.imagen
+          catId: products?.categoria?.id,
+          cat_: products?.categoria?.categoria,
+          marId: products?.marca?.id,
+          mar_: products?.marca?.marca,
+          unmId: products?.unidadMedida?.id,
+          uni_: products?.unidadMedida?.unidad_medida,
+          img_: products?.imagen
         }))
-        productRef.current = rta
-        setProducts(rta)
-      }).catch(err => {
+        setProducts(productRef.current)
+      })
+      .catch(err => {
+        console.error(err)
+      }
+      )
+  }
+
+  useEffect(() => {
+
+    getInfoProducts()
+
+    fetch('https://tea2.herokuapp.com/categorias/all')
+      .then(async res => await res.json())
+      .then(res => {
+        categoryRef.current = res
+      })
+      .catch(err => {
         console.error(err)
       })
+
+    fetch('https://tea2.herokuapp.com/marca/all')
+      .then(async res => await res.json())
+      .then(res => {
+        brandRef.current = res
+      })
+      .catch(err => {
+        console.error(err)
+      })
+
+    fetch('https://tea2.herokuapp.com/unidadmedida/all')
+      .then(async res => await res.json())
+      .then(res => {
+        uniMedRef.current = res
+      })
+      .catch(err => {
+        console.error(err)
+      })
+
   }, [])
 
   useEffect(() => {
     if (isOpen) {
       setModal(false)
-      setAlertConfirm(false)
-    }
-
-    if (isAlertConfirm) {
-      setModal(false)
-      setIsOpen(false)
     }
 
     if (isModal) {
       setIsOpen(false)
-      setAlertConfirm(false)
     }
-  }, [isOpen, isAlertConfirm, isModal])
+  }, [isOpen, isModal])
 
   useEffect(() => {
     if (selectedImage) {
       setImageUrl(URL.createObjectURL(selectedImage))
+      setDetProd({
+        ...detProd,
+        img_: URL.createObjectURL(selectedImage),
+        file_: selectedImage
+      })
     }
   }, [selectedImage])
 
-  useEffect(() => {
-    if (detProd) {
-      getCod(detProd.cod_)
-      getNom(detProd.nom_)
-      getPre(detProd.pre_)
-      getCan(detProd.can_)
-      getCatId(detProd.catId)
-      getMarId(detProd.marId)
-      getUniId(detProd.unmId)
-      setImageUrl(detProd.img_)
-      getDet(detProd.des_)
-    }
-  }, [detProd])
-
-  function filterCat(obj) {
-    if (obj.toLowerCase().includes(filtro.toLowerCase())) {
-      return true
-    }
-    return false
-  }
-
-  const verDetalleProducto = (id) => {
+  const verDetalleProducto = id => {
     setIsBtnSave('Editar')
     setIdProd(id)
     setColorIsBtnSave('bg-yellow-500')
     setMsnAlert(`Llego a ${isBtnSave} el producto`)
     setModal(true)
 
-    const getInfoProduct = products.filter((prod) => prod.id_ == id)
+    const getInfoProduct = products.filter(prod => prod.id_ == id)
     if (getInfoProduct) {
-      setDetProd(getInfoProduct[0])
+      setDetProd({
+        ...getInfoProduct[0],
+        file: ''
+      })
+      setImageUrl(getInfoProduct[0].img_)
     }
   }
 
@@ -154,57 +176,134 @@ export default function Productos() {
     setModal(true)
     setIsBtnSave('Guardar')
     setColorIsBtnSave('bg-blue-500')
-    setIdProd('')
-    getCod('')
-    getNom('')
-    getPre('')
-    getCan('')
-    getCatId('')
-    getMarId('')
-    getUniId('')
+    setDetProd({
+      ...detProd,
+      id_: 0,
+      cod_: '',
+      nom_: '',
+      des_: '',
+      can_: '',
+      pre_: '',
+      catId: '',
+      cat_: '',
+      marId: '',
+      mar_: '',
+      unmId: '',
+      uni_: '',
+      img_: '',
+      file: ''
+    })
     setImageUrl('')
-    getDet('')
   }
 
   const eliminarProducto = () => {
-    setAlertConfirm(false)
-    setIsOpen(true)
+    fetch(`https://tea2.herokuapp.com/productos/delete/${idProd}`,
+      {
+        method: "DELETE"
+      })
+      .then(function (res) { })
+
+    if (!isOpen) {
+      setIsOpen(true)
+    }
     setMsnAlert(`Se eliminó el producto`)
-    const filterProduct = products.filter((prod) => prod.cod_ != codProd)
+    const filterProduct = products.filter(prod => prod.cod_ != codProd)
     setProducts(filterProduct)
+    setTipoAlert(0)
   }
 
-  const handleDelete = (cod) => {
-    setAlertConfirm(true)
+  const handleDelete = (cod, idd_) => {
+    if (!isOpen) {
+      setIsOpen(true)
+    }
     setCodProd(cod)
+    setIdProd(idd_)
+    setTipoAlert(2)
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault()
+    setTipoAlert(1)
+    const form = e.target
+
+    const formData = new FormData(form)
+
+    const formJson = Object.fromEntries(formData.entries())
+
+    let cate = [...categoryRef.current].filter(cat => Number(cat.id) === Number(formJson.cat_))
+    cate = (cate) ? cate[0] : {}
+
+    let marca = [...brandRef.current].filter(brad => Number(brad.id) === Number(formJson.mar_))
+    marca = (marca) ? marca[0] : {}
+
+    let um = [...uniMedRef.current].filter(un_i => Number(un_i.id) === Number(formJson.uni_))
+    um = (um) ? um[0] : {}
+
+    let senData = {
+      id: formJson.id_,
+      nombre: formJson.prod_,
+      descripcion: formJson.des_,
+      precio: formJson.pre_,
+      cantidad: formJson.can_,
+      imagen: formJson.img_,
+      estado: "disponible",
+      file: formJson.file,
+      categoria: cate,
+      marca: marca,
+      unidadMedida: um,
+      estado: "disponible"
+    }
+
+    fetch("https://tea2.herokuapp.com/productos/save",
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify(senData)
+      })
+      .then(function (res) { getInfoProducts() })
+
     setModal(false)
-    setIsOpen(true)
-
-    const form = e.target;
-    const formData = new FormData(form);
-
-    const formJson = Object.fromEntries(formData.entries());
-
-    console.log(formJson)
+    if (!isOpen) {
+      setIsOpen(true)
+    }
   }
 
-  const filtrarPor = (e) => {
+  const filtrarPor = e => {
     e.preventDefault()
     let prod_ = productRef.current
     if (tipoFiltro == 'categoria') {
-      setProducts(prod_.filter(prod => { return prod.cat_.toLowerCase().includes(filtro.toLowerCase()) }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.cat_.toLowerCase().includes(filtro.toLowerCase())
+        })
+      )
     } else if (tipoFiltro == 'codigo') {
-      setProducts(prod_.filter(prod => { return prod.cod_.toLowerCase().includes(filtro.toLowerCase()) }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.cod_.toLowerCase().includes(filtro.toLowerCase())
+        })
+      )
     } else if (tipoFiltro == 'producto') {
-      setProducts(prod_.filter(prod => { return prod.nom_.toLowerCase().includes(filtro.toLowerCase()) }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.nom_.toLowerCase().includes(filtro.toLowerCase())
+        })
+      )
     } else if (tipoFiltro == 'marca') {
-      setProducts(prod_.filter(prod => { return prod.mar_.toLowerCase().includes(filtro.toLowerCase()) }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.mar_.toLowerCase().includes(filtro.toLowerCase())
+        })
+      )
     } else if (tipoFiltro == 'unida') {
-      setProducts(prod_.filter(prod => { return prod.cat_.toLowerCase().includes(filtro.toLowerCase()) }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.cat_.toLowerCase().includes(filtro.toLowerCase())
+        })
+      )
     } else if (tipoFiltro == 'precio') {
       setProducts(prod_.filter(prod => { return prod.pre_ == filtro }))
     } else if (tipoFiltro == 'cantidad') {
@@ -217,275 +316,50 @@ export default function Productos() {
     }
   }
 
+  const handlerInputChange = (e) => {
+    const { name, type } = e.target
+    setDetProd({
+      ...detProd,
+      [name]:
+        type == 'checkbox'
+          ? e.target.checkbox
+          : e.target.value
+    })
+  }
+
   return (
-    <MainLayout
-      title="Productoss"
-      description="pagina para gestionar productos"
-    >
-      <Transition show={isOpen} as={Fragment}>
-        <Dialog onClose={() => setIsOpen(false)}>
-          <Transition.Child
-            as={Fragment}
-            enter="transition duration-100 ease-out"
-            enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
-          >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
+    <MainLayout title="Productos" description="pagina para gestionar productos">
+      <ModalForm
+        stateModal={isModal}
+        closeModal={() => setModal(false)}
+        titulo="Producto"
+        initialFocus={completeButtonRef}
+        children={
+          <FormProduct
+            closeModal={() => setModal(false)}
+            handleSubmit={handleSubmit}
+            handlerInputChange={handlerInputChange}
+            setSelectedImage={setSelectedImage}
+            data={detProd}
+            imageUrl={imageUrl}
+            color={isColorBtnSave}
+            nombBtn={isBtnSave}
+            initialFocus={completeButtonRef}
+            categorias={categoryRef.current}
+            marcas={brandRef.current}
+            uniMed={uniMedRef.current}
+          />
+        }
+      />
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full rounded-lg text-left shadow-xl sm:my-8 sm:w-full sm:max-w-lg transition-all bg-white">
-                  <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div className="p-6 text-center">
-                      <CheckCircleIcon className="mx-auto mb-4 text-yellow-500 w-14 h-14 dark:text-gray-200" />
-                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        Felicitaciones
-                      </h3>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">{msnAlert}</p>
-                      </div>
-                    </div>
-                  </div>
-                </Dialog.Panel>
+      <Alerta
+        tipo={tipoAlert}
+        valor={isOpen}
+        eliminarProductos={() => eliminarProducto()}
+        closeAlert={() => setIsOpen(false)}
+      />
 
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-
-      <Transition show={isAlertConfirm} as={Fragment}>
-        <Dialog
-          onClose={() => setAlertConfirm(false)}
-          className="relative z-50"
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="transition duration-100 ease-out"
-            enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
-          >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full rounded-lg text-left shadow-xl sm:my-8 sm:w-full sm:max-w-lg transition-all bg-white">
-                  <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div className="p-6 text-center">
-                      <ExclamationCircleIcon className="mx-auto mb-4 text-red-500 w-14 h-14 dark:text-gray-200" />
-                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        Esta seguro de eliminar?
-                      </h3>
-                      <button
-                        onClick={() => eliminarProducto()}
-                        data-modal-hide="popup-modal"
-                        type="button"
-                        className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
-                      >
-                        Si, Estoy seguro
-                      </button>
-                      <button
-                        onClick={() => setAlertConfirm(false)}
-                        data-modal-hide="popup-modal"
-                        type="button"
-                        className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-                      >
-                        No, cancelar
-                      </button>
-                    </div>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-
-      <Transition show={isModal} as={Fragment}>
-        <Dialog onClose={() => setModal(false)} className="relative z-50">
-          <Transition.Child
-            as={Fragment}
-            enter="transition duration-100 ease-out"
-            enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
-          >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full lg:max-w-1/2 md:max-w-5xl rounded-lg text-left shadow-xl sm:my-8 sm:w-full sm:max-w-lg transition-all bg-white">
-                  <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left [&_h2]:text-base [&_h2]:text-4xl [&_h2]:font-semibold [&_h2]:leading-6 [&_h2]:text-gray-900">
-                      <Dialog.Title>Producto</Dialog.Title>
-                    </div>
-                    <div className="mt-2 mb-4 pt-6">
-
-                      <form method="post" onSubmit={handleSubmit}>
-                        <div className="grid md:grid-cols-2 md:gap-6">
-                          <div className='&_select]:bg-gray-50 [&_select]:border [&_select]:border-gray-300 [&_select]:text-gray-900 [&_select]:text-sm [&_select]:rounded-lg [&_select]:focus:ring-blue-500 [&_select]:focus:border-blue-500 [&_select]:block [&_select]:w-full [&_select]:p-2.5'>
-                            <div className="grid md:grid-cols-2 md:gap-6">
-                              <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="cod_" onChange={e => getCod(e.target.value)} value={cod_} id={`${idForm}-codigo`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor={`${idForm}-codigo`} className="peer-focus:font-medium absolute text-sm text-gray-500 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Código</label>
-                                <input type="hidden" name="id_" id={`${idForm}-id`} value={idProd} />
-                              </div>
-                              <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="prod_" onChange={e => getNom(e.target.value)} value={nom_} id={`${idForm}-nombre`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor={`${idForm}-nombre`} className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Producto</label>
-                              </div>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 md:gap-6">
-                              <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="pre_" onChange={e => getPre(e.target.value)} value={pre_} id={`${idForm}-precio`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor={`${idForm}-precio`} className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Precio</label>
-                              </div>
-                              <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="can_" onChange={e => getCan(e.target.value)} value={can_} id={`${idForm}-cantidad`} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor={`${idForm}-cantidad`} className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cantidad</label>
-                              </div>
-                            </div>
-
-                            <div className="grid md:grid-cols-3 md:gap-6">
-                              <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor={`${idForm}-categoria`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Categoria</label>
-                                <select id={`${idForm}-categoria`} name="cat_" value={catId} onChange={e => getCatId(e.target.value)}>
-                                  <option value="">Selecionar</option>
-                                  <option value="1">Bebidas</option>
-                                  <option value="2">Embutidos</option>
-                                  <option value="3">Lácteos</option>
-                                  <option value="4">Abarrotes</option>
-                                </select>
-                              </div>
-                              <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor={`${idForm}-marca`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Marca</label>
-                                <select id={`${idForm}-marca`} name="mar_" value={marId} onChange={e => getMarId(e.target.value)}>
-                                  <option value="">Selecionar</option>
-                                  <option value="1">Inka kola</option>
-                                  <option value="2">Kola inglesa</option>
-                                  <option value="3">Breadt</option>
-                                  <option value="4">La Segoviana</option>
-                                  <option value="5">Gloria</option>
-                                  <option value="6">Laive</option>
-                                  <option value="7">Costeño</option>
-                                  <option value="8">Florida</option>
-                                </select>
-                              </div>
-                              <div className="relative z-0 w-full mb-6 group">
-                                <label htmlFor={`${idForm}-unidadmedida`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Unidad Medida</label>
-                                <select id={`${idForm}-unidadmedida`} name="uni_" value={uniId} onChange={e => getUniId(e.target.value)}>
-                                  <option value="">Selecionar</option>
-                                  <option value="1">Caja 6 unidades</option>
-                                  <option value="2">1 Lt</option>
-                                  <option value="3">Paquete</option>
-                                  <option value="4">200g</option>
-                                  <option value="5">Pack x6 400g</option>
-                                  <option value="6">Tripack Caja 1L</option>
-                                  <option value="7">1.8kg</option>
-                                  <option value="8">5kg</option>
-                                  <option value="9">140g</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div className="relative z-0 w-full mb-6 group">
-                              <label htmlFor={`${idForm}-descripcion`} className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Descripción</label>
-                              <textarea onChange={e => getDet(e.target.value)} name="des_" value={det_} id={`${idForm}-descripcion`} rows={2} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-0 border-b-2 border-gray-300 focus:ring-blue-500 focus:border-0 focus:border-b-2 focus:border-blue-600" placeholder="Descripción"></textarea>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="relative z-0 w-full mb-6 group">
-                              <label
-                                className="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
-                                htmlFor={`${idForm}-imagen`}
-                              >
-                                Cargar imagen
-                              </label>
-                              <input
-                                onChange={e =>
-                                  setSelectedImage(e.target.files[0])
-                                }
-                                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                aria-describedby={`${idForm}-imagen_help`}
-                                id={`${idForm}-imagen`} name="file"
-                                type="file"
-                              />
-                              <input type="hidden" value={imageUrl} id={`${idForm}-img`} name='img_' />
-                              {imageUrl && (
-                                <img
-                                  src={imageUrl}
-                                  alt={nom_}
-                                  className='h-52 w-max-full'
-                                />
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        <button
-                          type="submit"
-                          className={`text-white ${isColorBtnSave} hover:${isColorBtnSave}/55 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4] mr-2 mb-2`}
-                        >
-                          <ArchiveBoxIcon className="h-6 w-6 text-white" />
-                          <span>{isBtnSave}</span>
-                        </button>
-                        <button
-                          onClick={() => setModal(false)}
-                          className="text-white bg-red-500 hover:bg-danger-100 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
-                        >
-                          <XMarkIcon className="h-6 w-6 text-white" />
-                          <span>Cancelar</span>
-                        </button>
-                      </form>
-
-                    </div>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-
-
-      <div class='container m-auto mb-8 md:mb-20'>
+      <div className='container m-auto mb-8 md:mb-20'>
         <main className="px-4 md:px-10 mx-auto -m-28 pt-10 w-full m-auto mt-10 relative">
           <div className="w-full mb-12 px-4 -mt-36">
             <div className="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
@@ -507,6 +381,7 @@ export default function Productos() {
                   <div className="basis-1/2">
                     <div className="mb-3 xl:w-full">
                       <div className="relative mb-4 flex-wrap items-stretch">
+
                         <form id={`${idForm}-search-form`} onSubmit={filtrarPor}>
                           <div className="flex relative">
                             <select
@@ -552,7 +427,11 @@ export default function Productos() {
                   </div>
                 </div>
               </div>
-              <ProductList showProduct={verDetalleProducto} deleteProduct={handleDelete} products={products} />
+              <ProductList
+                showProduct={verDetalleProducto}
+                deleteProduct={handleDelete}
+                products={products}
+              />
             </div>
           </div>
         </main>
