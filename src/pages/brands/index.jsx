@@ -1,6 +1,5 @@
 import AddAndFilter from '@/utils/AddAndFilter'
 import { MainLayout } from '@/layout'
-import Confirmations from '@/utils/Confirmations'
 import ModalForAdd from '@/utils/ModalForAdd'
 import React, { useEffect, useState } from 'react'
 import ItemList from '@/utils/ItemList'
