@@ -118,7 +118,7 @@ export default function index() {
   const array = !search.value
     ? arrayCategories
     : arrayCategories.filter(item =>
-        item[`${search.select}`]
+        item[`${search.select}` !== '' ? `${search.select}` : 'categoria']
           .toString()
           .toLowerCase()
           .includes(search.value.toString().toLowerCase())
