@@ -1,6 +1,5 @@
 import AddAndFilter from '@/utils/AddAndFilter'
 import { MainLayout } from '@/layout'
-import Confirmations from '@/utils/Confirmations'
 import ModalForAdd from '@/utils/ModalForAdd'
 import React, { useEffect, useState } from 'react'
 import ItemList from '@/utils/ItemList'
@@ -12,6 +11,10 @@ export default function index() {
   const [isAlertConfirm, setIsAlertConfirm] = useState(false)
   const [responseAPI, setResponseAPI] = useState([])
   const [arrayBrands, setArrayBrands] = useState([])
+  const [search, setSearch] = useState({
+    select: '',
+    value: ''
+  })
   const [brand, setBrand] = useState({
     id: '',
     brand: '',
@@ -87,11 +90,31 @@ export default function index() {
           : e.target.value
     })
   }
-
+  const handlerFilter = e => {
+    const { name, type } = e.target
+    setSearch({
+      ...search,
+      [name]:
+        type == 'text'
+          ? e.target.value
+          : type == 'checkbox'
+          ? e.target.checkbox
+          : e.target.value
+    })
+  }
   const handlerForm = e => {
     e.preventDefault()
     setIsOpen(false)
   }
+
+  const array = !search.value
+    ? arrayBrands
+    : arrayBrands.filter(item =>
+        item[`${search.select}` !== '' ? `${search.select}` : 'marca']
+          .toString()
+          .toLowerCase()
+          .includes(search.value.toString().toLowerCase())
+      )
 
   return (
     <MainLayout title="Marcas" description="pagina para gestionar marcas">
@@ -111,12 +134,13 @@ export default function index() {
       {/* <Confirmations /> */}
       <div className={styles.table}>
         <AddAndFilter
+          handlerFilter={handlerFilter}
           title={'Marcas'}
           handlerState={openFormAdd}
-          optionsSelect={['Marca', 'Estado']}
+          optionsSelect={['marca', 'estado']}
         />
         <ItemList
-          array={arrayBrands}
+          array={array}
           headerList={['Marca', 'Estado', 'Editar', 'Eliminar']}
           valuesList={['marca', 'estado']}
           deleteItem={handlerDeleteItem}
