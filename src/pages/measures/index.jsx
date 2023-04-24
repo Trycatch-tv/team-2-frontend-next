@@ -1,3 +1,4 @@
+import FormMeasures from '@/components/measures/FormMeasures'
 import MeasuresList from '@/components/measures/MeasuresList'
 import { MainLayout } from '@/layout'
 import React from 'react'
