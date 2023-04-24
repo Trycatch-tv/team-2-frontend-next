@@ -11,7 +11,7 @@ const navigation = [
   { name: 'Productos', href: '/productos', current: true },
   { name: 'Categorias', href: '/categories', current: false },
   { name: 'Marcas', href: '/brands', current: false },
-  { name: 'Medidas', href: '/measures', current: false }
+  { name: 'Medidas', href: '/mea', current: false }
 ]
 
 export const Navbar = () => {
