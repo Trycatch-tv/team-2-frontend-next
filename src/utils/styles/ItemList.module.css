@@ -9,13 +9,13 @@
 .container table thead {
   width: 100%;
   height: 50px;
-  font-size: large;
+  font-size: 17px;
 }
 .container table tbody {
   width: 100%;
   height: 40px;
   font-size: large;
-  font-weight: 500;
+  font-weight: 200;
 }
 
 .container table tbody tr {
@@ -31,7 +31,7 @@
 }
 
 .container table tbody tr td button svg {
-  height: 40px;
+  height: 23px;
 }
 
 .container table tbody tr td button :hover {
@@ -39,4 +39,14 @@
   border-radius: 5px;
   padding: 3px;
   color: white;
+}
+
+@media (max-width: 700px) {
+  .container table thead {
+    font-size: 12px;
+  }
+
+  .container table tbody {
+    font-size: 13px;
+  }
 }

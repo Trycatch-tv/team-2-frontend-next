@@ -11,7 +11,7 @@ export default function ItemList({
   return (
     <div className={styles.container}>
       <table>
-        <thead>
+        <thead className="bg-gray-50">
           <tr>
             {headerList &&
               headerList.map((header, i) => <th key={i}>{header}</th>)}
@@ -20,7 +20,7 @@ export default function ItemList({
         <tbody>
           {array &&
             array.map(item => (
-              <tr key={item.id}>
+              <tr className="bg-white border-b" key={item.id}>
                 <td>{item[`${valuesList[0]}`]}</td>
                 <td>{item[`${valuesList[1]}`]}</td>
                 {item[`${valuesList[2]}`] ? (
@@ -32,12 +32,12 @@ export default function ItemList({
 
                 <td>
                   <button onClick={() => updateItem(item)}>
-                    <PencilSquareIcon />
+                    <PencilSquareIcon width={'25px'} color="#273c75" />
                   </button>
                 </td>
                 <td>
                   <button onClick={() => deleteItem(item.id)}>
-                    <TrashIcon />
+                    <TrashIcon width={'25px'} color="#d63031" />
                   </button>
                 </td>
               </tr>
