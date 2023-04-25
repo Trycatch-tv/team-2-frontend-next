@@ -68,7 +68,7 @@
 
 @media (max-width: 700px) {
   .container {
-    width: 100%;
+    width: 150%;
     display: flex;
     justify-content: center;
     gap: 1em;
