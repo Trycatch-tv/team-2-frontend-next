@@ -153,13 +153,7 @@ const index = () => {
 
         <ItemList
           array={array}
-          headerList={[
-            'Codigo',
-            'unidad_medida',
-            'Estado',
-            'Editar',
-            'Eliminar'
-          ]}
+          headerList={['Codigo', 'Medida', 'Estado', 'Editar', 'Eliminar']}
           valuesList={['codigo', 'unidad_medida', 'estado']}
           deleteItem={handlerDeleteItem}
           updateItem={openFormUpdate}

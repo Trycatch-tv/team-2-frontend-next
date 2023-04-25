@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 4em;
+  gap: 2rem;
 }
 .title {
   font-size: large;
@@ -18,13 +18,12 @@
   gap: 1.5em;
 }
 .form form input {
-  text-align: center;
+  text-align: left;
   height: 40px;
-  border: 1px solid;
   border-radius: 8px;
 }
 .form form select {
-  text-align: center;
+  text-align: left;
   height: 40px;
   border: 1px solid;
   border-radius: 8px;
