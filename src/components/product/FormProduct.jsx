@@ -17,7 +17,7 @@ export default function FormProduct({
     uniMed
 }) {
     const idForm = useId()
-    console.log(data)
+
     return (
         <form method="post" onSubmit={handleSubmit}>
             <div className="grid md:grid-cols-1 md:gap-6">

@@ -13,9 +13,7 @@ const elementos = [
 
 export default function Alerta({ tipo, valor, eliminarProductos, closeAlert }) {
     let info = tipo == 2 ? ({ titulo: "Esta seguro de eliminar?", subtitulo: "" }) : (tipo == 1 ? ({ titulo: "Felicitaciones", subtitulo: "Se guardo de manera correcta" }) : ({ titulo: "Felicitaciones", subtitulo: "Se eliminó de manera correcta" }))
-    console.log(elementos[tipo])
-    console.log(valor)
-    console.log(tipo)
+
     return (
         <Transition show={valor} as={Fragment}>
             <Dialog onClose={closeAlert}>

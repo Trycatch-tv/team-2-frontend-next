@@ -10,7 +10,11 @@ module.exports = {
   ],
   theme: {
     extend: {
-      'oscuro': '#003333'
+      colors: {
+        'oscuro': '#003333',
+        'primary': '#065f46ff',
+        'secundary': '#374151ff'
+      }
     },
   },
   plugins: [],
