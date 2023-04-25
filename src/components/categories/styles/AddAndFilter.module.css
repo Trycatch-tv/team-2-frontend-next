@@ -68,12 +68,13 @@
 
 @media (max-width: 700px) {
   .container {
-    width: 150%;
+    width: 100%;
     display: flex;
     justify-content: center;
     gap: 1em;
     align-items: center;
   }
+
   .filter input {
     width: 200px;
   }
