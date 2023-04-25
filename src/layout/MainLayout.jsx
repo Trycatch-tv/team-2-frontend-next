@@ -17,7 +17,7 @@ export const MainLayout = ({
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <Navbar />
-      <main className="flex flex-col justify-between items-center min-h-screen mb:p-24 lg:p-24 lg:p-24 p-2">{children}</main>
+      <main className="flex flex-col justify-between items-center min-h-screen mb:p-4 lg:p-4 lg:p-24 p-2">{children}</main>
       <Footer />
     </>
   )
