@@ -8,7 +8,7 @@ import { ProfileMenu } from './ProfileMenu'
 import { classNames } from './classNames'
 
 const navigation = [
-  { name: 'Productos', href: '/productos', current: true },
+  { name: 'Productos', href: '/productos', current: false },
   { name: 'Categorias', href: '/categories', current: false },
   { name: 'Marcas', href: '/brands', current: false },
   { name: 'Medidas', href: '/mea', current: false }
