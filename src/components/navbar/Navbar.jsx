@@ -1,20 +1,33 @@
-import { Fragment } from 'react'
-
 import { useSelector } from 'react-redux'
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { LoginMenu } from './LoginMenu'
 import { ProfileMenu } from './ProfileMenu'
-import { classNames } from './classNames'
-
-const navigation = [
-  { name: 'Productos', href: '/productos', current: false },
-  { name: 'Categorias', href: '/categories', current: false },
-  { name: 'Marcas', href: '/brands', current: false },
-  { name: 'Medidas', href: '/mea', current: false }
-]
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export const Navbar = () => {
+  const pathname = usePathname()
+
+  const navLink = [
+    {
+      name: 'Productos',
+      link: '/productos'
+    },
+    {
+      name: 'Categorias',
+      link: '/categories'
+    },
+    {
+      name: 'Marcas',
+      link: '/brands'
+    },
+    {
+      name: 'Medidas',
+      link: '/mea'
+    }
+  ]
+
   const { uid } = useSelector(state => state.auth)
   return (
     <Disclosure as="nav" className="bg-gray-100">
@@ -52,21 +65,22 @@ export const Navbar = () => {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map(item => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? 'bg-emerald-800 text-white'
-                            : 'text-gray-800 hover:bg-emerald-800 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
+                    {navLink.map(({ link, name }) => {
+                      const isActive = pathname.startsWith(link)
+                      return (
+                        <Link
+                          key={name}
+                          href={link}
+                          className={` ${
+                            isActive
+                              ? 'bg-emerald-800 text-white'
+                              : 'text-gray-800 hover:bg-emerald-800 hover:text-white'
+                          } rounded-md px-3 py-2 text-sm font-medium `}
+                        >
+                          {name}
+                        </Link>
+                      )
+                    })}
                   </div>
                 </div>
               </div>
@@ -78,23 +92,24 @@ export const Navbar = () => {
           </div>
           {/* mobile links */}
           <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map(item => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? 'bg-green-900 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
+            <div className="space-y-1 px-2 pb-3 pt-2 mb-12">
+              {navLink.map(({ link, name }) => {
+                const isActive = pathname.startsWith(link)
+                return (
+                  <Disclosure.Button
+                    key={name}
+                    as="a"
+                    href={link}
+                    className={` ${
+                      isActive
+                        ? 'bg-emerald-800 text-white'
+                        : 'text-gray-800 hover:bg-emerald-800 hover:text-white'
+                    }  block rounded-md px-3 py-2 text-base font-medium`}
+                  >
+                    {name}
+                  </Disclosure.Button>
+                )
+              })}
             </div>
           </Disclosure.Panel>
         </>

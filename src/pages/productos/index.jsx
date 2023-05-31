@@ -1,9 +1,6 @@
 import { useState, useEffect, useId, useRef } from 'react'
 
-import {
-  PlusIcon,
-  MagnifyingGlassIcon
-} from '@heroicons/react/24/outline'
+import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { MainLayout } from '@/layout/MainLayout'
 import { ProductList } from '@/components/product/ProductList'
 import Alerta from '@/utils/Alert'
@@ -28,12 +25,7 @@ export default function Productos() {
 
   let completeButtonRef = useRef(null)
 
-  const {
-    idProd,
-    setIdProd,
-    codProd,
-    setCodProd
-  } = useFormulario()
+  const { idProd, setIdProd, codProd, setCodProd } = useFormulario()
 
   const [msnAlert, setMsnAlert] = useState('')
 
@@ -46,7 +38,6 @@ export default function Productos() {
   const categoryRef = useRef(null)
   const brandRef = useRef(null)
   const uniMedRef = useRef(null)
-
 
   const [tipoAlert, setTipoAlert] = useState(2)
   const [isOpen, setIsOpen] = useState(false)
@@ -80,7 +71,7 @@ export default function Productos() {
       .then(res => {
         productRef.current = res?.map(products => ({
           id_: products.id,
-          cod_: "COD" + products.id,
+          cod_: 'COD' + products.id,
           nom_: products.nombre,
           des_: products.descripcion,
           can_: products.cantidad,
@@ -97,12 +88,10 @@ export default function Productos() {
       })
       .catch(err => {
         console.error(err)
-      }
-      )
+      })
   }
 
   useEffect(() => {
-
     getInfoProducts()
 
     fetch('https://tea2.herokuapp.com/categorias/all')
@@ -131,7 +120,6 @@ export default function Productos() {
       .catch(err => {
         console.error(err)
       })
-
   }, [])
 
   useEffect(() => {
@@ -197,11 +185,9 @@ export default function Productos() {
   }
 
   const eliminarProducto = () => {
-    fetch(`https://tea2.herokuapp.com/productos/delete/${idProd}`,
-      {
-        method: "DELETE"
-      })
-      .then(function (res) { })
+    fetch(`https://tea2.herokuapp.com/productos/delete/${idProd}`, {
+      method: 'DELETE'
+    }).then(function (res) {})
 
     if (!isOpen) {
       setIsOpen(true)
@@ -230,14 +216,20 @@ export default function Productos() {
 
     const formJson = Object.fromEntries(formData.entries())
 
-    let cate = [...categoryRef.current].filter(cat => Number(cat.id) === Number(formJson.cat_))
-    cate = (cate) ? cate[0] : {}
+    let cate = [...categoryRef.current].filter(
+      cat => Number(cat.id) === Number(formJson.cat_)
+    )
+    cate = cate ? cate[0] : {}
 
-    let marca = [...brandRef.current].filter(brad => Number(brad.id) === Number(formJson.mar_))
-    marca = (marca) ? marca[0] : {}
+    let marca = [...brandRef.current].filter(
+      brad => Number(brad.id) === Number(formJson.mar_)
+    )
+    marca = marca ? marca[0] : {}
 
-    let um = [...uniMedRef.current].filter(un_i => Number(un_i.id) === Number(formJson.uni_))
-    um = (um) ? um[0] : {}
+    let um = [...uniMedRef.current].filter(
+      un_i => Number(un_i.id) === Number(formJson.uni_)
+    )
+    um = um ? um[0] : {}
 
     let senData = {
       id: formJson.id_,
@@ -246,24 +238,24 @@ export default function Productos() {
       precio: formJson.pre_,
       cantidad: formJson.can_,
       imagen: formJson.img_,
-      estado: "disponible",
+      estado: 'disponible',
       file: formJson.file,
       categoria: cate,
       marca: marca,
       unidadMedida: um,
-      estado: "disponible"
+      estado: 'disponible'
     }
 
-    fetch("https://tea2.herokuapp.com/productos/save",
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify(senData)
-      })
-      .then(function (res) { getInfoProducts() })
+    fetch('https://tea2.herokuapp.com/productos/save', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(senData)
+    }).then(function (res) {
+      getInfoProducts()
+    })
 
     setModal(false)
     if (!isOpen) {
@@ -305,9 +297,17 @@ export default function Productos() {
         })
       )
     } else if (tipoFiltro == 'precio') {
-      setProducts(prod_.filter(prod => { return prod.pre_ == filtro }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.pre_ == filtro
+        })
+      )
     } else if (tipoFiltro == 'cantidad') {
-      setProducts(prod_.filter(prod => { return prod.can_ == filtro }))
+      setProducts(
+        prod_.filter(prod => {
+          return prod.can_ == filtro
+        })
+      )
     } else {
       if (tipoFiltro == '') {
         setFiltro('')
@@ -316,14 +316,11 @@ export default function Productos() {
     }
   }
 
-  const handlerInputChange = (e) => {
+  const handlerInputChange = e => {
     const { name, type } = e.target
     setDetProd({
       ...detProd,
-      [name]:
-        type == 'checkbox'
-          ? e.target.checkbox
-          : e.target.value
+      [name]: type == 'checkbox' ? e.target.checkbox : e.target.value
     })
   }
 
@@ -359,7 +356,7 @@ export default function Productos() {
         closeAlert={() => setIsOpen(false)}
       />
 
-      <div className='container m-auto mb-8 md:mb-20'>
+      <div className="container m-auto mb-8 md:mb-20">
         <main className="px-4 md:px-10 mx-auto -m-28 pt-10 w-full m-auto mt-10 relative">
           <div className="w-full mb-12 px-4 -mt-36">
             <div className="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
@@ -381,14 +378,18 @@ export default function Productos() {
                   <div className="basis-1/2">
                     <div className="mb-3 xl:w-full">
                       <div className="relative mb-4 flex-wrap items-stretch">
-
-                        <form id={`${idForm}-search-form`} onSubmit={filtrarPor}>
+                        <form
+                          id={`${idForm}-search-form`}
+                          onSubmit={filtrarPor}
+                        >
                           <div className="flex relative">
                             <select
                               name="tipo_filtro"
                               id={`${idForm}-tipofiltro`}
                               value={tipoFiltro}
-                              onChange={e => { setTipoFiltro(e.target.value) }}
+                              onChange={e => {
+                                setTipoFiltro(e.target.value)
+                              }}
                               className="m-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             >
                               <option value="">Selecionar</option>

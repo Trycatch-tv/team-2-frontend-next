@@ -1,5 +1,3 @@
-import { searchProducts } from "@/services/products";
+import { searchProducts } from '@/services/products'
 
-export function useProducts() {
-
-}
+export function useProducts() {}
